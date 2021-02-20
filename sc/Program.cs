@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+//https://youtu.be/wgHIkdUQbp0?t=3119
 namespace sc
 {
     class Program
