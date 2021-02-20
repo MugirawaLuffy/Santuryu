@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace sc
 {
@@ -7,6 +8,7 @@ namespace sc
     {
         static void Main(string[] args)
         {
+            Console.Title = "Santōryū IDE";
             while (true)
             {
                 System.Console.Write("> ");
@@ -14,18 +16,33 @@ namespace sc
                 if (string.IsNullOrWhiteSpace(line))
                     return;
 
-                var lexer = new Lexer(line);
-                while (true)
-                {
-                    var token = lexer.NextToken();
-                    if (token.Kind == SyntaxKind.EndOfFileToken)
-                        break;
-                    System.Console.WriteLine();
-                    Console.Write($"{token.Kind}: '{token.Text}'");
-                    if (token.Value != null)
-                        System.Console.Write($" {token.Value}");
-                    System.Console.WriteLine();
-                }
+                var parser = new Parser(line);
+                var expression = parser.Parse();
+                var color = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+
+                PrettyPrint(expression);
+
+                Console.ForegroundColor = color;
+
+            }
+        }
+
+        static void PrettyPrint(SyntaxNode node, string indent = "")
+        {
+            Console.Write(indent);
+            Console.Write(node.Kind);
+            if (node is SyntaxToken t && t.Value != null)
+            {
+                System.Console.Write(" ");
+                System.Console.Write(t.Value);
+            }
+            Console.WriteLine();
+
+            indent += "    ";
+            foreach (var child in node.GetChildren())
+            {
+                PrettyPrint(child, indent);
             }
         }
     }
@@ -44,9 +61,9 @@ namespace sc
         NumberExpression,
         BinaryExpression
     }
-    class SyntaxToken
+    class SyntaxToken : SyntaxNode
     {
-        public SyntaxKind Kind { get; }
+        public override SyntaxKind Kind { get; }
         public int Position { get; }
         public string Text { get; }
         public object Value { get; }
@@ -57,6 +74,11 @@ namespace sc
             Position = position;
             Text = text;
             Value = value;
+        }
+
+        public override IEnumerable<SyntaxNode> GetChildren()
+        {
+            return Enumerable.Empty<SyntaxNode>();
         }
     }
 
@@ -136,6 +158,8 @@ namespace sc
     abstract class SyntaxNode
     {
         public abstract SyntaxKind Kind { get; }
+
+        public abstract IEnumerable<SyntaxNode> GetChildren();
     }
 
     abstract class ExpressionSyntax : SyntaxNode
@@ -152,6 +176,11 @@ namespace sc
         public override SyntaxKind Kind => SyntaxKind.NumberExpression;
 
         public SyntaxToken NumberToken { get; }
+
+        public override IEnumerable<SyntaxNode> GetChildren()
+        {
+            yield return NumberToken;
+        }
     }
 
     sealed class BinaryExpressionSyntax : ExpressionSyntax
@@ -169,7 +198,12 @@ namespace sc
         public SyntaxToken OperatorToken { get; }
         public ExpressionSyntax Right { get; }
 
-
+        public override IEnumerable<SyntaxNode> GetChildren()
+        {
+            yield return Left;
+            yield return OperatorToken;
+            yield return Right;
+        }
     }
     class Parser
     {
