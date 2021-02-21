@@ -5,6 +5,8 @@ namespace Santuryu.CodeAnalysis.Binding
         Addition,
         Subtraction,
         Multiplikation,
-        Division
+        Division,
+        LogicalAnd,
+        LogicalOr
     }
 }

@@ -14,6 +14,9 @@ namespace Santuryu.CodeAnalysis.Syntax
         OpenParenthesisToken,
         CloseParenthesisToken,
         IdentifierToken,
+        BangToken,
+        AmpersandAmpersandToken,
+        PipePipeToken,
         //Keywords
         FalseKeyword,
         TrueKeyword,
@@ -22,8 +25,6 @@ namespace Santuryu.CodeAnalysis.Syntax
         BinaryExpression,
         UnaryExpression,
         ParenthesizedExpression,
-
-
 
     }
 }
