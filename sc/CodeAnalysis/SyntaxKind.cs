@@ -17,6 +17,7 @@ namespace Santuryu.CodeAnalysis
         //Expressions
         LiteralExpression,
         BinaryExpression,
+        UnaryExpression,
         ParenthesizedExpression
     }
 }
