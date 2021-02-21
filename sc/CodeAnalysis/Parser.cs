@@ -60,42 +60,21 @@ namespace Santuryu.CodeAnalysis
             return new SyntaxTree(_diagnostics, expression, endOfFileToken);
         }
 
-        // private ExpressionSyntax ParseExpression()
-        // {
-        //     return ParseTerm();
-        // }
-        // private ExpressionSyntax ParseTerm()
-        // {
-        //     var left = ParseFactor();
-
-        //     while (Current.Kind == SyntaxKind.PlusToken ||
-        //             Current.Kind == SyntaxKind.MinusToken)
-        //     {
-        //         var operatorToken = NextToken();
-        //         var right = ParseFactor();
-        //         left = new BinaryExpressionSyntax(left, operatorToken, right);
-        //     }
-
-        //     return left;
-        // }
-        // private ExpressionSyntax ParseFactor()
-        // {
-        //     var left = ParsePrimaryExpression();
-
-        //     while (Current.Kind == SyntaxKind.StarToken ||
-        //             Current.Kind == SyntaxKind.SlashToken)
-        //     {
-        //         var operatorToken = NextToken();
-        //         var right = ParsePrimaryExpression();
-        //         left = new BinaryExpressionSyntax(left, operatorToken, right);
-        //     }
-
-        //     return left;
-        // }
-
         private ExpressionSyntax ParseExpression(int parentPrecedence = 0)
         {
-            var left = ParsePrimaryExpression();
+            ExpressionSyntax left;
+            var unaryOperatorPrecedence = Current.Kind.GetUnaryOperatorPrecedence();
+            if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence)
+            {
+                var operatorToken = NextToken();
+                var operand = ParseExpression(unaryOperatorPrecedence);
+                left = new UnaryExpressionSyntax(operatorToken, operand);
+            }
+            else
+            {
+                left = ParsePrimaryExpression();
+            }
+
             while (true)
             {
                 var precedence = Current.Kind.GetBinaryOperatorPrecedence();
