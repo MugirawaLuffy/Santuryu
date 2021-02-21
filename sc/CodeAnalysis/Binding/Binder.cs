@@ -33,8 +33,7 @@ namespace Santuryu.CodeAnalysis.Binding
 
             if (boundOperatorKind == null)
             {
-                _diagnostics.Add($"Binary operator '{syntax.OperatorToken.Text}' is not"
-                                + " defined for type '{boundLeft.Type}' and ''{boundLeft.Type}''");
+                _diagnostics.Add($"Binary operator '{syntax.OperatorToken.Text}' is not defined for type '{boundLeft.Type}' and ''{boundRight.Type}''");
                 return boundLeft;
             }
 
@@ -56,9 +55,8 @@ namespace Santuryu.CodeAnalysis.Binding
 
         private BoundExpression BindLiteralExpression(LiteralExpressionSyntax syntax)
         {
-            var value = syntax.LiteralToken.Value as int? ?? 0;
+            var value = syntax.Value ?? 0;
             return new BoundLiteralExpression(value);
-
         }
         private BoundUnaryOperatorKind? BindUnaryOperatorKind(SyntaxKind kind, Type operandType)
         {
