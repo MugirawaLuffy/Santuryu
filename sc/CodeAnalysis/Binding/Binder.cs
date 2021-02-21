@@ -33,7 +33,7 @@ namespace Santuryu.CodeAnalysis.Binding
 
             if (boundOperatorKind == null)
             {
-                _diagnostics.Add($"Binary operator '{syntax.OperatorToken.Text}' is not defined for type '{boundLeft.Type}' and ''{boundRight.Type}''");
+                _diagnostics.Add($"Binary operator '{syntax.OperatorToken.Text}' is not defined for type '{boundLeft.Type}' and '{boundRight.Type}'");
                 return boundLeft;
             }
 
