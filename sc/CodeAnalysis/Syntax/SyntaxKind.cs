@@ -17,6 +17,8 @@ namespace Santuryu.CodeAnalysis.Syntax
         BangToken,
         AmpersandAmpersandToken,
         PipePipeToken,
+        EqualsEqualsToken,
+        BangEqualsToken,
         //Keywords
         FalseKeyword,
         TrueKeyword,

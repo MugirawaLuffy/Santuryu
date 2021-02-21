@@ -7,6 +7,8 @@ namespace Santuryu.CodeAnalysis.Binding
         Multiplikation,
         Division,
         LogicalAnd,
-        LogicalOr
+        LogicalOr,
+        Equals,
+        NotEquals
     }
 }
