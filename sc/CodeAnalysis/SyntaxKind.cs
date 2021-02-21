@@ -15,7 +15,7 @@ namespace Santuryu.CodeAnalysis
         CloseParenthesisToken,
 
         //Expressions
-        NumberExpression,
+        LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression
     }
