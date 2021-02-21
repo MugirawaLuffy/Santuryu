@@ -2,16 +2,19 @@ namespace Santuryu.CodeAnalysis
 {
     public enum SyntaxKind
     {
-        NumberToken,
+        //tokens
+        BadToken,
+        EndOfFileToken,
         WhiteSpaceToken,
+        NumberToken,
         PlusToken,
         MinusToken,
         StarToken,
         SlashToken,
         OpenParenthesisToken,
         CloseParenthesisToken,
-        BadToken,
-        EndOfFileToken,
+
+        //Expressions
         NumberExpression,
         BinaryExpression,
         ParenthesizedExpression
