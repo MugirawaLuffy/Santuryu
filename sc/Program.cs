@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Santuryu.CodeAnalysis;
+using Santuryu.CodeAnalysis.Syntax;
 
 namespace Santuryu
 {

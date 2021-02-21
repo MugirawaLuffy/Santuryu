@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Santuryu.CodeAnalysis
+namespace Santuryu.CodeAnalysis.Syntax
 {
     public sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Santuryu.CodeAnalysis
+namespace Santuryu.CodeAnalysis.Syntax
 {
     internal sealed class Parser
     {

@@ -1,4 +1,4 @@
-namespace Santuryu.CodeAnalysis
+namespace Santuryu.CodeAnalysis.Syntax
 {
     internal static class SyntaxFacts
     {

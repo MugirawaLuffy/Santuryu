@@ -1,4 +1,4 @@
-namespace Santuryu.CodeAnalysis
+namespace Santuryu.CodeAnalysis.Syntax
 {
     public abstract class ExpressionSyntax : SyntaxNode
     {

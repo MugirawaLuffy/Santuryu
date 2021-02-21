@@ -1,5 +1,6 @@
 
 using System;
+using Santuryu.CodeAnalysis.Syntax;
 
 namespace Santuryu.CodeAnalysis
 {
