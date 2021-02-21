@@ -3,7 +3,7 @@ using System;
 
 namespace Santuryu.CodeAnalysis
 {
-    class Evaluator
+    public sealed class Evaluator
     {
         private readonly ExpressionSyntax _root;
 

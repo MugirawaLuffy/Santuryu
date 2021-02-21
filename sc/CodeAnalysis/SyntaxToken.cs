@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Santuryu.CodeAnalysis
 {
-    class SyntaxToken : SyntaxNode
+    public class SyntaxToken : SyntaxNode
     {
         public override SyntaxKind Kind { get; }
         public int Position { get; }

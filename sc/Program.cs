@@ -5,12 +5,12 @@ using Santuryu.CodeAnalysis;
 
 namespace Santuryu
 {
-    class Program
+    internal static class Program
     {
 
-        static void Main(string[] args)
+        private static void Main()
         {
-            bool showTree = false;
+            var showTree = false;
             Console.Title = "Santōryū IDE";
             while (true)
             {
@@ -31,7 +31,7 @@ namespace Santuryu
                     continue;
                 }
 
-                var color = Console.ForegroundColor;
+
                 var syntaxTree = SyntaxTree.Parse(line);
 
                 if (showTree)
@@ -40,6 +40,7 @@ namespace Santuryu
 
                     PrettyPrint(syntaxTree.Root);
                     System.Console.WriteLine("___________________________________________End of SyntaxTree");
+                    Console.ResetColor();
                 }
 
                 if (!syntaxTree.Diagnostics.Any())
@@ -56,7 +57,7 @@ namespace Santuryu
                         System.Console.WriteLine(diagnostic);
                     }
                 }
-                Console.ForegroundColor = color;
+                Console.ResetColor();
             }
         }
         static void PrettyPrint(SyntaxNode node, string indent = "", bool isLast = true)
