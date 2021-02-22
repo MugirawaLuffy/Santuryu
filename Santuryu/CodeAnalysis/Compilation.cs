@@ -6,7 +6,7 @@ using Santuryu.CodeAnalysis.Syntax;
 
 namespace Santuryu.CodeAnalysis
 {
-    public sealed class Compilation
+    public sealed partial class Compilation
     {
         public Compilation(SyntaxTree syntax)
         {
@@ -27,7 +27,7 @@ namespace Santuryu.CodeAnalysis
 
             var evaluator = new Evaluator(BoundExpression);
             var value = evaluator.Evaluate();
-            return new EvaluationResult(Array.Empty<string>(), value);
+            return new EvaluationResult(Array.Empty<Diagnostic>(), value);
         }
     }
 }
