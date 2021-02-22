@@ -19,6 +19,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         PipePipeToken,
         EqualsEqualsToken,
         BangEqualsToken,
+        EqualsToken,
         //Keywords
         FalseKeyword,
         TrueKeyword,
@@ -27,6 +28,8 @@ namespace Santuryu.CodeAnalysis.Syntax
         BinaryExpression,
         UnaryExpression,
         ParenthesizedExpression,
+        NameExpression,
+        AssignmentExpression,
 
     }
 }
