@@ -5,7 +5,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         //tokens
         BadToken,
         EndOfFileToken,
-        WhiteSpaceToken,
+        WhitespaceToken,
         NumberToken,
         PlusToken,
         MinusToken,
