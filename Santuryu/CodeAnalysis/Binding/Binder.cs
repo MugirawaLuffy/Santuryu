@@ -7,6 +7,13 @@ namespace Santuryu.CodeAnalysis.Binding
     internal sealed class Binder
     {
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
+        private readonly Dictionary<string, object> _variables;
+
+        public Binder(Dictionary<string, object> variables)
+        {
+            _variables = variables;
+        }
+
         public DiagnosticBag Diagnostics => _diagnostics;
         public BoundExpression BindExpression(ExpressionSyntax syntax)
         {
@@ -35,12 +42,11 @@ namespace Santuryu.CodeAnalysis.Binding
         {
             return BindExpression(syntax.Expression);
         }
-        private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
-        {
-            throw new NotImplementedException();
-        }
-
         private BoundExpression BindNameExpression(NameExpressionSyntax syntax)
+        {
+            throw new Exception();
+        }
+        private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
         {
             throw new NotImplementedException();
         }
