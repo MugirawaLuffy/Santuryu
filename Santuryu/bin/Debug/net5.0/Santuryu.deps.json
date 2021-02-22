@@ -6,14 +6,6 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "sc/1.0.0": {
-        "dependencies": {
-          "Santuryu": "1.0.0"
-        },
-        "runtime": {
-          "sc.dll": {}
-        }
-      },
       "Santuryu/1.0.0": {
         "runtime": {
           "Santuryu.dll": {}
@@ -22,11 +14,6 @@
     }
   },
   "libraries": {
-    "sc/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Santuryu/1.0.0": {
       "type": "project",
       "serviceable": false,

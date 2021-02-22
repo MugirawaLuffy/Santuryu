@@ -1,10 +1,10 @@
 
 using System;
 using Santuryu.CodeAnalysis.Binding;
-using Santuryu.CodeAnalysis.Syntax;
 
 namespace Santuryu.CodeAnalysis
 {
+
     internal sealed class Evaluator
     {
         private readonly BoundExpression _root;

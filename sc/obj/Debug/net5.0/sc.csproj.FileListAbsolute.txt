@@ -14,3 +14,6 @@ D:\nils\Santoryu\sc\obj\Debug\net5.0\sc.dll
 D:\nils\Santoryu\sc\obj\Debug\net5.0\ref\sc.dll
 D:\nils\Santoryu\sc\obj\Debug\net5.0\sc.pdb
 D:\nils\Santoryu\sc\obj\Debug\net5.0\sc.genruntimeconfig.cache
+D:\nils\Santoryu\sc\bin\Debug\net5.0\Santuryu.dll
+D:\nils\Santoryu\sc\bin\Debug\net5.0\Santuryu.pdb
+D:\nils\Santoryu\sc\obj\Debug\net5.0\sc.csproj.CopyComplete

@@ -1,30 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {
-      "Santuryu/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "compile": {
-          "bin/placeholder/Santuryu.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Santuryu.dll": {}
-        }
-      }
-    }
+    "net5.0": {}
   },
-  "libraries": {
-    "Santuryu/1.0.0": {
-      "type": "project",
-      "path": "../Santuryu/Santuryu.csproj",
-      "msbuildProject": "../Santuryu/Santuryu.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net5.0": [
-      "Santuryu >= 1.0.0"
-    ]
+    "net5.0": []
   },
   "packageFolders": {
     "C:\\Users\\Nils\\.nuget\\packages\\": {}
@@ -32,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\nils\\Santoryu\\sc\\sc.csproj",
-      "projectName": "sc",
-      "projectPath": "D:\\nils\\Santoryu\\sc\\sc.csproj",
+      "projectUniqueName": "D:\\nils\\Santoryu\\Santuryu\\Santuryu.csproj",
+      "projectName": "Santuryu",
+      "projectPath": "D:\\nils\\Santoryu\\Santuryu\\Santuryu.csproj",
       "packagesPath": "C:\\Users\\Nils\\.nuget\\packages\\",
-      "outputPath": "D:\\nils\\Santoryu\\sc\\obj\\",
+      "outputPath": "D:\\nils\\Santoryu\\Santuryu\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Nils\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,11 +34,7 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {
-            "D:\\nils\\Santoryu\\Santuryu\\Santuryu.csproj": {
-              "projectPath": "D:\\nils\\Santoryu\\Santuryu\\Santuryu.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
