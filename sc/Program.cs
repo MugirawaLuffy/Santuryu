@@ -56,13 +56,31 @@ namespace Santuryu
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     foreach (var diagnostic in diagnostics)
                     {
+                        System.Console.WriteLine("_____________________________________________________");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         System.Console.WriteLine(diagnostic);
+                        Console.ResetColor();
+
+                        var prefix = line.Substring(0, diagnostic.Span.Start);
+                        var error = line.Substring(diagnostic.Span.Start, diagnostic.Span.Length);
+                        var suffix = line.Substring(diagnostic.Span.End);
+
+                        Console.Write("    ");
+                        Console.Write(prefix);
+
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write(error);
+                        Console.ResetColor();
+
+                        Console.Write(suffix);
+                        System.Console.WriteLine();
+                        System.Console.WriteLine("_____________________________________________________");
+                        Console.WriteLine();
                     }
                 }
-                Console.ResetColor();
+
             }
         }
         static void PrettyPrint(SyntaxNode node, string indent = "", bool isLast = true)
