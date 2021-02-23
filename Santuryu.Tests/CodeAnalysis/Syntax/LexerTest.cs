@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 
-namespace Santuryu.Tests
+namespace Santuryu.Tests.CodeAnalysis.Syntax
 {
-    public class UnitTest1
+    public class LexerTest
     {
         [Fact]
         public void Test1()
