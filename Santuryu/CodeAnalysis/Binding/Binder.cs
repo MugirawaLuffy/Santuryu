@@ -51,13 +51,26 @@ namespace Santuryu.CodeAnalysis.Binding
                 return new BoundLiteralExpression(0);
             }
 
-            var type = value?.GetType() ?? typeof(object);
+            var type = value?.GetType();
             return new BoundVariableExpression(name, type);
         }
         private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
         {
             var name = syntax.IdentifierToken.Text;
             var boundExpression = BindExpression(syntax.Expression);
+
+            var defaultValue =
+                boundExpression.Type == typeof(int)
+                ? (object)0
+                : boundExpression.Type == typeof(bool)
+                ? (object)false
+                : null;
+
+            if (defaultValue == null)
+                throw new Exception($"Unsupported variable type: {boundExpression.Type}");
+
+            _variables[name] = defaultValue;
+
             return new BoundAssignmentExpression(name, boundExpression);
         }
 
