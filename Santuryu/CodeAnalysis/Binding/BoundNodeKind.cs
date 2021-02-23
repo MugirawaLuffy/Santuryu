@@ -3,6 +3,8 @@ namespace Santuryu.CodeAnalysis.Binding
     internal enum BoundNodeKind
     {
         LiteralExpression,
-        UnaryExpression
+        UnaryExpression,
+        VariableExpression,
+        AssignmentExpression
     }
 }

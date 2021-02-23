@@ -59,5 +59,11 @@ namespace Santuryu.CodeAnalysis
             var message = $"Unary operator '{operatorText}' is not defined for type '{operandType}'.";
             Report(span, message);
         }
+
+        public void ReportUndefinedName(TextSpan span, string name)
+        {
+            var message = $"Variable {name} does not exist in this context.";
+            Report(span, message);
+        }
     }
 }

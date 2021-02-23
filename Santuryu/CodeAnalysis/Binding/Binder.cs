@@ -44,11 +44,21 @@ namespace Santuryu.CodeAnalysis.Binding
         }
         private BoundExpression BindNameExpression(NameExpressionSyntax syntax)
         {
-            throw new Exception();
+            var name = syntax.IdentifierToken.Text;
+            if (!_variables.TryGetValue(name, out var value))
+            {
+                _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
+                return new BoundLiteralExpression(0);
+            }
+
+            var type = value?.GetType() ?? typeof(object);
+            return new BoundVariableExpression(name, type);
         }
         private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
         {
-            throw new NotImplementedException();
+            var name = syntax.IdentifierToken.Text;
+            var boundExpression = BindExpression(syntax.Expression);
+            return new BoundAssignmentExpression(name, boundExpression);
         }
 
         private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax)

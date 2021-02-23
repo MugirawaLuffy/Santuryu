@@ -31,6 +31,17 @@ namespace Santuryu.CodeAnalysis
                 return n.Value;
             }
 
+            if (node is BoundVariableExpression v)
+            {
+                return _variables[v.Name];
+            }
+            if (node is BoundAssignmentExpression a)
+            {
+                var value = EvaluateExpression(a.Expression);
+                _variables[a.Name] = value;
+                return value;
+            }
+
             if (node is BoundUnaryExpression u)
             {
                 var operand = EvaluateExpression(u.Operand);
