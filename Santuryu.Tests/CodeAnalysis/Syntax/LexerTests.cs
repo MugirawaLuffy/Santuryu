@@ -7,8 +7,7 @@ using Xunit;
 
 namespace Santuryu.Tests.CodeAnalysis.Syntax
 {
-    //https://youtu.be/xF-8rWeqV1A?t=1650
-    public class LexerTest
+    public class LexerTests
     {
         [Theory]
         [MemberData(nameof(GetTokensData))]
@@ -17,8 +16,11 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
             var tokens = SyntaxTree.ParseTokens(text);
 
             var token = Assert.Single(tokens);
+            Assert.Equal(kind, token.Kind);
             Assert.Equal(text, token.Text);
         }
+
+
         [Theory]
         [MemberData(nameof(GetTokenPairsData))]
         public void Lexer_Lexes_TokenPairs(SyntaxKind t1Kind, string t1Text,
