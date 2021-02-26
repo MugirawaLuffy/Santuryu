@@ -26,28 +26,21 @@ namespace Santuryu.CodeAnalysis
             //BinaryExpression
             //NumberExpression
 
-            if (node.Kind == BoundNodeKind.LiteralExpression)
+            switch (node.Kind)
             {
-                return EvaluateLiteralExpression((BoundLiteralExpression)node);
+                case BoundNodeKind.LiteralExpression:
+                    return EvaluateLiteralExpression((BoundLiteralExpression)node);
+                case BoundNodeKind.VariableExpression:
+                    return EvaluateVariableExpression((BoundVariableExpression)node);
+                case BoundNodeKind.AssignmentExpression:
+                    return EvaluateAssignmentExpression((BoundAssignmentExpression)node);
+                case BoundNodeKind.UnaryExpression:
+                    return EvaluateUnaryExpression((BoundUnaryExpression)node);
+                case BoundNodeKind.BinaryExpression:
+                    return EvaluateBinaryExpression((BoundBinaryExpression)node);
+                default:
+                    throw new Exception($"Unexpected node: {node.Kind}");
             }
-            else if (node.Kind == BoundNodeKind.VariableExpression)
-            {
-                return EvaluateVariableExpression((BoundVariableExpression)node);
-            }
-            else if (node.Kind == BoundNodeKind.AssignmentExpression)
-            {
-                return EvaluateAssignmentExpression((BoundAssignmentExpression)node);
-            }
-            else if (node.Kind == BoundNodeKind.UnaryExpression)
-            {
-                return EvaluateUnaryExpression((BoundUnaryExpression)node);
-            }
-            else if (node.Kind == BoundNodeKind.BinaryExpression)
-            {
-                return EvaluateBinaryExpression((BoundBinaryExpression)node);
-            }
-            else
-                throw new Exception($"Unexpected node: {node.Kind}");
         }
 
         private static object EvaluateLiteralExpression(BoundLiteralExpression n)
