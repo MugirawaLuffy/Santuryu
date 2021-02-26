@@ -15,11 +15,13 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
             var tokenKinds = Enum.GetValues(typeof(SyntaxKind))
                                  .Cast<SyntaxKind>()
                                  .Where(k => k.ToString().EndsWith("Keyword") ||
-                                             k.ToString().EndsWith("Token"));
+                                             k.ToString().EndsWith("Token"))
+                                 .ToList();
 
             var testedTokenKinds = GetTokens().Concat(GetSeparators()).Select(t => t.kind);
 
             var untestedTokenKinds = new SortedSet<SyntaxKind>(tokenKinds);
+
             untestedTokenKinds.Remove(SyntaxKind.BadToken);
             untestedTokenKinds.Remove(SyntaxKind.EndOfFileToken);
             untestedTokenKinds.ExceptWith(testedTokenKinds);
