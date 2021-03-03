@@ -50,7 +50,7 @@ namespace Santuryu
                     }
                 }
 
-                textBuilder.Append(input);
+                textBuilder.AppendLine(input);
                 var text = textBuilder.ToString();
 
                 var syntaxTree = SyntaxTree.Parse(text);
