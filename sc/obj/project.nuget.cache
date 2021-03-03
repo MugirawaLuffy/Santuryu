@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/10GLXBCLN87qSjxNlxrzm8hyiO06TgsmCYhMxV/fz8Ou0KhDmkzMklhL8KUI9reQyJ2GS5UpSy+PSz2qSQl6w==",
+  "dgSpecHash": "mMfo1H4loQMWEb0Pn+6i3zSOHfmMm9PkbNQfWZ9w4D+OdNcUa5ud6X5wBDgg3vB+qCyBC7Yr9Vt5uD4wXgxJ9w==",
   "success": true,
   "projectFilePath": "D:\\nils\\Santoryu\\sc\\sc.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Nils\\.nuget\\packages\\system.collections.immutable\\5.0.0\\system.collections.immutable.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
