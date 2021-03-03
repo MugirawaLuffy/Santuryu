@@ -12,13 +12,17 @@ namespace Santuryu.CodeAnalysis.Text
             _text = text;
             Lines = ParseLines(this, text);
         }
-        public ImmutableArray<TextLine> Lines { get; private set; }
+
+        public ImmutableArray<TextLine> Lines { get; }
+
+        public char this[int index] => _text[index];
+
+        public int Length => _text.Length;
 
         public int GetLineIndex(int position)
         {
-            //binary search over lines to maximize speed like a real pro
             var lower = 0;
-            var upper = _text.Length - 1;
+            var upper = Lines.Length - 1;
 
             while (lower <= upper)
             {
@@ -50,7 +54,7 @@ namespace Santuryu.CodeAnalysis.Text
 
             while (position < text.Length)
             {
-                var lineBreakWidth = GetLineBrakeWidth(text, position);
+                var lineBreakWidth = GetLineBreakWidth(text, position);
 
                 if (lineBreakWidth == 0)
                 {
@@ -64,9 +68,9 @@ namespace Santuryu.CodeAnalysis.Text
                     lineStart = position;
                 }
             }
+
             if (position > lineStart)
                 AddLine(result, sourceText, position, lineStart, 0);
-
 
             return result.ToImmutable();
         }
@@ -74,15 +78,15 @@ namespace Santuryu.CodeAnalysis.Text
         private static void AddLine(ImmutableArray<TextLine>.Builder result, SourceText sourceText, int position, int lineStart, int lineBreakWidth)
         {
             var lineLength = position - lineStart;
-            var lineLengthIncludingLineBreake = lineLength + lineBreakWidth;
-            var line = new TextLine(sourceText, lineStart, lineLength, lineLengthIncludingLineBreake);
+            var lineLengthIncludingLineBreak = lineLength + lineBreakWidth;
+            var line = new TextLine(sourceText, lineStart, lineLength, lineLengthIncludingLineBreak);
             result.Add(line);
         }
 
-        private static int GetLineBrakeWidth(string text, int position)
+        private static int GetLineBreakWidth(string text, int position)
         {
             var c = text[position];
-            var l = position >= text.Length ? '\0' : text[position + 1];
+            var l = position + 1 >= text.Length ? '\0' : text[position + 1];
 
             if (c == '\r' && l == '\n')
                 return 2;
@@ -99,7 +103,9 @@ namespace Santuryu.CodeAnalysis.Text
         }
 
         public override string ToString() => _text;
+
         public string ToString(int start, int length) => _text.Substring(start, length);
+
         public string ToString(TextSpan span) => ToString(span.Start, span.Length);
     }
 }

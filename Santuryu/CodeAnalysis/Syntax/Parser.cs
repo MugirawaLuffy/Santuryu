@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Santuryu.CodeAnalysis.Text;
 
 namespace Santuryu.CodeAnalysis.Syntax
 {
@@ -10,7 +11,7 @@ namespace Santuryu.CodeAnalysis.Syntax
 
         private int _position;
 
-        public Parser(string text)
+        public Parser(SourceText text)
         {
             var tokens = new List<SyntaxToken>();
 
