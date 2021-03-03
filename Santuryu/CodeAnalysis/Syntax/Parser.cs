@@ -6,7 +6,7 @@ namespace Santuryu.CodeAnalysis.Syntax
     internal sealed class Parser
     {
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
-        private readonly SyntaxToken[] _tokens;
+        private readonly ImmutableArray<SyntaxToken> _tokens;
 
         private int _position;
 
@@ -27,7 +27,7 @@ namespace Santuryu.CodeAnalysis.Syntax
                 }
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
-            _tokens = tokens.ToArray();
+            _tokens = tokens.ToImmutableArray();
             _diagnostics.AddRange(lexer.Diagnostics);
         }
 
