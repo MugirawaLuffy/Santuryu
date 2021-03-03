@@ -48,7 +48,7 @@ namespace Santuryu
 
                     syntaxTree.Root.WriteTo(Console.Out);
 
-                    System.Console.WriteLine("___________________________________________End of SyntaxTree");
+
                     Console.ResetColor();
                 }
 
@@ -59,11 +59,17 @@ namespace Santuryu
                 }
                 else
                 {
+                    var text = syntaxTree.Text;
                     foreach (var diagnostic in diagnostics)
                     {
-                        System.Console.WriteLine("_____________________________________________________");
+                        var lineIndex = text.GetLineIndex(diagnostic.Span.Start);
+                        var lineNumber = lineIndex + 1;
+                        var character = diagnostic.Span.Start - text.Lines[lineIndex].Start + 1;
+
                         Console.ForegroundColor = ConsoleColor.DarkRed;
+
                         System.Console.WriteLine(diagnostic);
+                        Console.Write($"    (line:{lineNumber}, position:{character})");
                         Console.ResetColor();
 
                         var prefix = line.Substring(0, diagnostic.Span.Start);
@@ -74,12 +80,13 @@ namespace Santuryu
                         Console.Write(prefix);
 
                         Console.ForegroundColor = ConsoleColor.DarkRed;
+
                         Console.Write(error);
                         Console.ResetColor();
 
                         Console.Write(suffix);
                         System.Console.WriteLine();
-                        System.Console.WriteLine("_____________________________________________________");
+
                         Console.WriteLine();
                     }
                 }
