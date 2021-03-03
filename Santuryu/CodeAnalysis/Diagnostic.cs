@@ -1,3 +1,5 @@
+using Santuryu.CodeAnalysis.Text;
+
 namespace Santuryu.CodeAnalysis
 {
     public sealed class Diagnostic

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Santuryu.CodeAnalysis.Text;
 
 namespace Santuryu.CodeAnalysis.Syntax
 {

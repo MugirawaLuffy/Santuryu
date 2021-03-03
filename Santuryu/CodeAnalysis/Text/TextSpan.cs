@@ -1,6 +1,6 @@
 using System;
 
-namespace Santuryu.CodeAnalysis
+namespace Santuryu.CodeAnalysis.Text
 {
     public struct TextSpan
     {
