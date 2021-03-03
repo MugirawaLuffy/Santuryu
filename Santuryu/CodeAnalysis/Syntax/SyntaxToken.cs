@@ -18,6 +18,6 @@ namespace Santuryu.CodeAnalysis.Syntax
             Text = text;
             Value = value;
         }
-        public override TextSpan Span => new TextSpan(Position, Text.Length);
+        public override TextSpan Span => new TextSpan(Position, Text?.Length ?? 0);
     }
 }
