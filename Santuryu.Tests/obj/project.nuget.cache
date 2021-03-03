@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "n/8wLGcOyweNB4lYkWkuMFYW3tcsoFH+AxclOrgKLS9m2zEYgFDWgl0leIEkgGnhJPM8aq8OoiC1yRODINGAGA==",
+  "dgSpecHash": "5MzG/uH3dMxRGNlugSS4gxdvj0TZ8GACDHXqG9pafqm+FqsWqxVJbRj0pvt668h+Zl6dFZLwBw07xJnfjtOvSg==",
   "success": true,
   "projectFilePath": "D:\\nils\\Santoryu\\Santuryu.Tests\\Santuryu.Tests.csproj",
   "expectedPackageFiles": [
@@ -36,6 +36,7 @@
     "C:\\Users\\Nils\\.nuget\\packages\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
     "C:\\Users\\Nils\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\Nils\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
+    "C:\\Users\\Nils\\.nuget\\packages\\system.collections.immutable\\5.0.0\\system.collections.immutable.5.0.0.nupkg.sha512",
     "C:\\Users\\Nils\\.nuget\\packages\\system.console\\4.3.0\\system.console.4.3.0.nupkg.sha512",
     "C:\\Users\\Nils\\.nuget\\packages\\system.diagnostics.debug\\4.3.0\\system.diagnostics.debug.4.3.0.nupkg.sha512",
     "C:\\Users\\Nils\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.3.0\\system.diagnostics.diagnosticsource.4.3.0.nupkg.sha512",

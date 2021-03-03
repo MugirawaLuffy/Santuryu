@@ -5,6 +5,7 @@ namespace Santuryu.CodeAnalysis.Binding
         LiteralExpression,
         UnaryExpression,
         VariableExpression,
-        AssignmentExpression
+        AssignmentExpression,
+        BinaryExpression,
     }
 }

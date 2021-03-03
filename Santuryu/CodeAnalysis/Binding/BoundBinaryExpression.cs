@@ -12,7 +12,7 @@ namespace Santuryu.CodeAnalysis.Binding
         }
 
         public override Type Type => Op.Type;
-        public override BoundNodeKind Kind => BoundNodeKind.UnaryExpression;
+        public override BoundNodeKind Kind => BoundNodeKind.BinaryExpression;
 
         public BoundExpression Left { get; }
         public BoundBinaryOperator Op { get; }
