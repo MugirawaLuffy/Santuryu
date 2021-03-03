@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Santuryu.CodeAnalysis;
 using Santuryu.CodeAnalysis.Binding;
 using Santuryu.CodeAnalysis.Syntax;
+using Santuryu.CodeAnalysis.Text;
 
 namespace Santuryu
 {
@@ -14,29 +16,48 @@ namespace Santuryu
         {
             var showTree = false;
             var variables = new Dictionary<VariableSymbol, object>();
+            var textBuilder = new StringBuilder();
 
             Console.Title = "Santōryū IDE";
             while (true)
             {
-                System.Console.Write("> ");
-                var line = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(line))
-                    return;
-
-                if (line == "#showTree")
+                if (textBuilder.Length == 0)
+                    Console.Write("> ");
+                else
                 {
-                    showTree = !showTree;
-                    System.Console.WriteLine(showTree ? "Showing SyntaxTrees" : "Hiding SyntaxTrees");
-                    continue;
-                }
-                else if (line == "cls")
-                {
-                    Console.Clear();
-                    continue;
+                    Console.Write("│ ");
                 }
 
+                var input = Console.ReadLine();
+                var isBlank = string.IsNullOrWhiteSpace(input);
 
-                var syntaxTree = SyntaxTree.Parse(line);
+                if (textBuilder.Length == 0) // special commands
+                {
+                    if (isBlank)
+                    {
+                        break;
+                    }
+                    else if (input == "#showTree")
+                    {
+                        showTree = !showTree;
+                        System.Console.WriteLine(showTree ? "Showing SyntaxTrees" : "Hiding SyntaxTrees");
+                        continue;
+                    }
+                    else if (input == "cls")
+                    {
+                        Console.Clear();
+                        continue;
+                    }
+                }
+
+                textBuilder.Append(input);
+                var text = textBuilder.ToString();
+
+                var syntaxTree = SyntaxTree.Parse(text);
+
+                if (!isBlank && syntaxTree.Diagnostics.Any())
+                    continue;
+
                 var compilation = new Compilation(syntaxTree);
                 var result = compilation.Evaluate(variables);
 
@@ -59,12 +80,12 @@ namespace Santuryu
                 }
                 else
                 {
-                    var text = syntaxTree.Text;
                     foreach (var diagnostic in diagnostics)
                     {
-                        var lineIndex = text.GetLineIndex(diagnostic.Span.Start);
+                        var lineIndex = syntaxTree.Text.GetLineIndex(diagnostic.Span.Start);
                         var lineNumber = lineIndex + 1;
-                        var character = diagnostic.Span.Start - text.Lines[lineIndex].Start + 1;
+                        var line = syntaxTree.Text.Lines[lineIndex];
+                        var character = diagnostic.Span.Start - line.Start + 1;
 
                         Console.ForegroundColor = ConsoleColor.DarkRed;
 
@@ -72,9 +93,12 @@ namespace Santuryu
                         Console.Write($"    (line:{lineNumber}, position:{character})");
                         Console.ResetColor();
 
-                        var prefix = line.Substring(0, diagnostic.Span.Start);
-                        var error = line.Substring(diagnostic.Span.Start, diagnostic.Span.Length);
-                        var suffix = line.Substring(diagnostic.Span.End);
+                        var prefixSpan = TextSpan.FromBounds(line.Start, diagnostic.Span.Start);
+                        var suffixSpan = TextSpan.FromBounds(diagnostic.Span.End, line.End);
+
+                        var prefix = syntaxTree.Text.ToString(prefixSpan);
+                        var error = syntaxTree.Text.ToString(diagnostic.Span);
+                        var suffix = syntaxTree.Text.ToString(suffixSpan);
 
                         Console.Write("    ");
                         Console.Write(prefix);
@@ -90,6 +114,7 @@ namespace Santuryu
                         Console.WriteLine();
                     }
                 }
+                textBuilder.Clear();
 
             }
         }
