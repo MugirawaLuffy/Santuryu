@@ -12,17 +12,11 @@ namespace Santuryu.CodeAnalysis
         public int Start { get; }
         public int Length { get; }
         public int End => Start + Length;
-    }
 
-    public sealed class VariableSymbol
-    {
-        public VariableSymbol(string name, Type type)
+        public static TextSpan FromBounds(int start, int end)
         {
-            Name = name;
-            Type = type;
+            var length = end - start;
+            return new TextSpan(start, length);
         }
-
-        public string Name { get; }
-        public Type Type { get; }
     }
 }
