@@ -66,5 +66,11 @@ namespace Santuryu.CodeAnalysis
             var message = $"Variable {name} does not exist in this context.";
             Report(span, message);
         }
+
+        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        {
+            var message = $"Variable '{name}' already exists in this scope!";
+            Report(span, message);
+        }
     }
 }
