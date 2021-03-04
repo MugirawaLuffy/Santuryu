@@ -51,13 +51,9 @@ namespace Santuryu.CodeAnalysis.Syntax
             var marker = isLast ? "└──" : "├──";
             textWriter.Write(indent);
             if (isToConsole)
-            {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
-                textWriter.Write(marker);
-                Console.ResetColor();
-            }
-            else
-                textWriter.Write(marker);
+
+            textWriter.Write(marker);
 
             if (isToConsole)
                 Console.ForegroundColor = node is SyntaxToken
