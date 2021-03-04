@@ -20,9 +20,14 @@ namespace Santuryu.CodeAnalysis.Syntax
         EqualsEqualsToken,
         BangEqualsToken,
         EqualsToken,
+
         //Keywords
         FalseKeyword,
         TrueKeyword,
+
+        //Nodes
+        CompilationUnit,
+
         //Expressions
         LiteralExpression,
         BinaryExpression,
@@ -30,6 +35,5 @@ namespace Santuryu.CodeAnalysis.Syntax
         ParenthesizedExpression,
         NameExpression,
         AssignmentExpression,
-
     }
 }
