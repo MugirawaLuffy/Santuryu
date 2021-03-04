@@ -14,6 +14,8 @@ namespace Santuryu
 
         private static void Main()
         {
+            //TODO: support for color scheme
+
             var showTree = false;
             var variables = new Dictionary<VariableSymbol, object>();
             var textBuilder = new StringBuilder();
@@ -21,13 +23,14 @@ namespace Santuryu
             Console.Title = "Santōryū IDE";
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 if (textBuilder.Length == 0)
-                    Console.Write("> ");
+                    Console.Write("» ");
                 else
                 {
-                    Console.Write("│ ");
+                    Console.Write("· ");
                 }
-
+                Console.ResetColor();
                 var input = Console.ReadLine();
                 var isBlank = string.IsNullOrWhiteSpace(input);
 
@@ -75,8 +78,9 @@ namespace Santuryu
 
                 if (!diagnostics.Any())
                 {
-
+                    Console.ForegroundColor = ConsoleColor.Magenta;
                     System.Console.WriteLine(result.Value);
+                    Console.ResetColor();
                 }
                 else
                 {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,15 +47,33 @@ namespace Santuryu.CodeAnalysis.Syntax
             //├──
             //│
             //└──
+            var isToConsole = textWriter == Console.Out;
             var marker = isLast ? "└──" : "├──";
             textWriter.Write(indent);
-            textWriter.Write(marker);
+            if (isToConsole)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                textWriter.Write(marker);
+                Console.ResetColor();
+            }
+            else
+                textWriter.Write(marker);
+
+            if (isToConsole)
+                Console.ForegroundColor = node is SyntaxToken
+                    ? ConsoleColor.Blue
+                    : ConsoleColor.Cyan;
+
             textWriter.Write(node.Kind);
+
             if (node is SyntaxToken t && t.Value != null)
             {
                 textWriter.Write(" ");
                 textWriter.Write(t.Value);
             }
+            if (isToConsole)
+                Console.ResetColor();
+
             textWriter.WriteLine();
 
             indent += isLast ? "    " : "│   ";
