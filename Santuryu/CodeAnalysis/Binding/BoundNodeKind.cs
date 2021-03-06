@@ -5,6 +5,8 @@ namespace Santuryu.CodeAnalysis.Binding
         //Statements
         BlockStatement,
         ExpressionStatement,
+        VariableDeclaration,
+
         //Expressions
         LiteralExpression,
         UnaryExpression,

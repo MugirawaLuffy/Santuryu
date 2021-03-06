@@ -50,10 +50,14 @@ namespace Santuryu.CodeAnalysis.Syntax
         {
             switch (text)
             {
-                case "true":
-                    return SyntaxKind.TrueKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
+                case "let":
+                    return SyntaxKind.LetKeyword;
+                case "true":
+                    return SyntaxKind.TrueKeyword;
+                case "var":
+                    return SyntaxKind.VarKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
             }
@@ -114,6 +118,10 @@ namespace Santuryu.CodeAnalysis.Syntax
                     return "false";
                 case SyntaxKind.TrueKeyword:
                     return "true";
+                case SyntaxKind.LetKeyword:
+                    return "let";
+                case SyntaxKind.VarKeyword:
+                    return "var";
                 default:
                     return null;
             }

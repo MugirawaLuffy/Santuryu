@@ -71,10 +71,16 @@ namespace Santuryu.CodeAnalysis.Syntax
 
         private StatementSyntax ParseStatement()
         {
-            if (Current.Kind == SyntaxKind.OpenBraceToken)
-                return ParseBlockStatement();
-
-            return ParseExpressionStatement();
+            switch (Current.Kind)
+            {
+                case SyntaxKind.OpenBraceToken:
+                    return ParseBlockStatement();
+                case SyntaxKind.LetKeyword:
+                case SyntaxKind.VarKeyword:
+                    return ParseVariableDeclaration();
+                default:
+                    return ParseExpressionStatement();
+            }
         }
 
         private BlockStatementSyntax ParseBlockStatement()
@@ -99,6 +105,15 @@ namespace Santuryu.CodeAnalysis.Syntax
         {
             var expression = ParseExpression();
             return new ExpressionStatementSyntax(expression);
+        }
+        private StatementSyntax ParseVariableDeclaration()
+        {
+            var expected = Current.Kind == SyntaxKind.LetKeyword ? SyntaxKind.LetKeyword : SyntaxKind.VarKeyword;
+            var keyword = MatchToken(expected);
+            var identifier = MatchToken(SyntaxKind.IdentifierToken);
+            var equals = MatchToken(SyntaxKind.EqualsToken);
+            var initializer = ParseExpression();
+            return new VariableDeclarationSyntax(keyword, identifier, equals, initializer);
         }
 
         private ExpressionSyntax ParseExpression()

@@ -31,6 +31,9 @@ namespace Santuryu.CodeAnalysis
                 case BoundNodeKind.BlockStatement:
                     EvaluateBlockStatement((BoundBlockStatement)node);
                     break;
+                case BoundNodeKind.VariableDeclaration:
+                    EvaluateVariableDeclaration((BoundVariableDeclaration)node);
+                    break;
                 case BoundNodeKind.ExpressionStatement:
                     EvaluateExpressionStatement((BoundExpressionStatement)node);
                     break;
@@ -43,6 +46,13 @@ namespace Santuryu.CodeAnalysis
         {
             foreach (var statement in node.Statements)
                 EvaluateStatement(statement);
+        }
+
+        private void EvaluateVariableDeclaration(BoundVariableDeclaration node)
+        {
+            var value = EvaluateExpression(node.Initializer);
+            _variables[node.Variable] = value;
+            _lastValue = value;
         }
 
         private void EvaluateExpressionStatement(BoundExpressionStatement node)

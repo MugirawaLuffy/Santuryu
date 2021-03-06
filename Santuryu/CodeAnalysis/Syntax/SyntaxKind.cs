@@ -26,6 +26,8 @@ namespace Santuryu.CodeAnalysis.Syntax
         //Keywords
         FalseKeyword,
         TrueKeyword,
+        LetKeyword,
+        VarKeyword,
 
         //Nodes
         CompilationUnit,
@@ -33,6 +35,8 @@ namespace Santuryu.CodeAnalysis.Syntax
         //Statements
         BlockStatement,
         ExpressionStatement,
+        VariableDeclaration,
+
         //Expressions
         LiteralExpression,
         BinaryExpression,

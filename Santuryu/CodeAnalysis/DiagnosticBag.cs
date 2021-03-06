@@ -69,7 +69,19 @@ namespace Santuryu.CodeAnalysis
 
         public void ReportCannotConvert(TextSpan span, Type fromType, Type toType)
         {
-            var message = $"Invalid conversion: cannot convert type '{fromType}' to type '{toType}'";
+            var message = $"Invalid conversion: cannot convert type '{fromType}' to type '{toType}'.";
+            Report(span, message);
+        }
+
+        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        {
+            var message = $"Invalid declaration: Variable '{name}' already exists in this context.";
+            Report(span, message);
+        }
+
+        internal void ReportCannotAssign(TextSpan span, string name)
+        {
+            var message = $"Invalid assignment: Variable '{name}' is readonly an cannot be assigned to.";
             Report(span, message);
         }
     }
