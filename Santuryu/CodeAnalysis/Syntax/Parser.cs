@@ -7,8 +7,8 @@ namespace Santuryu.CodeAnalysis.Syntax
     internal sealed class Parser
     {
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
-        private readonly ImmutableArray<SyntaxToken> _tokens;
         private readonly SourceText _text;
+        private readonly ImmutableArray<SyntaxToken> _tokens;
         private int _position;
 
         public Parser(SourceText text)
@@ -28,9 +28,9 @@ namespace Santuryu.CodeAnalysis.Syntax
                 }
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
+            _text = text;
             _tokens = tokens.ToImmutableArray();
             _diagnostics.AddRange(lexer.Diagnostics);
-            _text = text;
         }
 
         public DiagnosticBag Diagnostics => _diagnostics;
@@ -64,9 +64,41 @@ namespace Santuryu.CodeAnalysis.Syntax
 
         public CompilationUnitSyntax ParseCompilationUnit()
         {
-            var expresion = ParseExpression();
+            var statement = ParseStatement();
             var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
-            return new CompilationUnitSyntax(expresion, endOfFileToken);
+            return new CompilationUnitSyntax(statement, endOfFileToken);
+        }
+
+        private StatementSyntax ParseStatement()
+        {
+            if (Current.Kind == SyntaxKind.OpenBraceToken)
+                return ParseBlockStatement();
+
+            return ParseExpressionStatement();
+        }
+
+        private BlockStatementSyntax ParseBlockStatement()
+        {
+            var statements = ImmutableArray.CreateBuilder<StatementSyntax>();
+
+            var openBraceToken = MatchToken(SyntaxKind.OpenBraceToken);
+
+            while (Current.Kind != SyntaxKind.EndOfFileToken &&
+                   Current.Kind != SyntaxKind.CloseBraceToken)
+            {
+                var statement = ParseStatement();
+                statements.Add(statement);
+            }
+
+            var closeBraceToken = MatchToken(SyntaxKind.CloseBraceToken);
+
+            return new BlockStatementSyntax(openBraceToken, statements.ToImmutable(), closeBraceToken);
+        }
+
+        private ExpressionStatementSyntax ParseExpressionStatement()
+        {
+            var expression = ParseExpression();
+            return new ExpressionStatementSyntax(expression);
         }
 
         private ExpressionSyntax ParseExpression()

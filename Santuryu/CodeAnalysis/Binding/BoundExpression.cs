@@ -6,4 +6,5 @@ namespace Santuryu.CodeAnalysis.Binding
     {
         public abstract Type Type { get; }
     }
+
 }
