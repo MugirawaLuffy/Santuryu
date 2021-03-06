@@ -8,10 +8,6 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
 {
     public class ParserTests
     {
-        // https://youtu.be/xF-8rWeqV1A?t=4088
-        // https://github.com/terrajobst/minsk/commit/5e1b23b670194b54dc31b48dd9f407e2e55ade8a
-        // https://github.com/terrajobst/minsk/commits/master?after=c24ae31a7e8d222fa329d8f401d7e42ce294d969+419&branch=master
-
         [Theory]
         [MemberData(nameof(GetBinaryOperatorPairsData))]
         public void Parser_BinaryExpression_HonorsPrecedences(SyntaxKind op1, SyntaxKind op2)
@@ -21,7 +17,7 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
             var op1Text = SyntaxFacts.GetText(op1);
             var op2Text = SyntaxFacts.GetText(op2);
             var text = $"a {op1Text} b {op2Text} c";
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = ParseExpression(text);
 
             if (op1Precedence >= op2Precedence)
             {
@@ -77,7 +73,7 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
             var unaryText = SyntaxFacts.GetText(unaryKind);
             var binaryText = SyntaxFacts.GetText(binaryKind);
             var text = $"{unaryText} a {binaryText} b";
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = ParseExpression(text);
 
             if (unaryPrecedence >= binaryPrecedence)
             {
@@ -119,6 +115,13 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
                     e.AssertToken(SyntaxKind.IdentifierToken, "b");
                 }
             }
+        }
+
+        private static ExpressionSyntax ParseExpression(string text)
+        {
+            var syntaxTree = SyntaxTree.Parse(text);
+            var root = syntaxTree.Root;
+            return root.Expression;
         }
 
         public static IEnumerable<object[]> GetBinaryOperatorPairsData()
