@@ -30,14 +30,14 @@ namespace Santuryu.CodeAnalysis
 
         public void ReportInvalidNumber(TextSpan span, string text, Type type)
         {
-            var message = $"The number {text} isn't valid {type}.";
+            var message = $"Corrupt input: The number {text} isn't valid {type}.";
             Report(span, message);
         }
 
         public void ReportBadCharacter(int position, char current)
         {
             var span = new TextSpan(position, 1);
-            var message = $"Bad character input '{current}'.";
+            var message = $"Corrupt input: Bad character input '{current}'.";
             Report(span, message);
         }
 
@@ -45,31 +45,31 @@ namespace Santuryu.CodeAnalysis
 
         public void ReportUnexpectedToken(TextSpan span, SyntaxKind actualKind, SyntaxKind expectedKind)
         {
-            var message = $"Unexpected token <{actualKind}>, expected <{expectedKind}>.";
+            var message = $"Unexpected token: got <{actualKind}>, expected <{expectedKind}>.";
             Report(span, message);
         }
 
         public void ReportUndefinedBinaryOperator(TextSpan span, string operatorText, Type leftType, Type rightType)
         {
-            var message = $"Binary operator '{operatorText}' for types {leftType} and {rightType}.";
+            var message = $"Undefined operator: Binary operator '{operatorText}' for types {leftType} and {rightType}.";
             Report(span, message);
         }
 
         public void ReportUndefinedUnaryOperator(TextSpan span, string operatorText, Type operandType)
         {
-            var message = $"Unary operator '{operatorText}' is not defined for type '{operandType}'.";
+            var message = $"Undefined operator: Unary operator '{operatorText}' is not defined for type '{operandType}'.";
             Report(span, message);
         }
 
         public void ReportUndefinedName(TextSpan span, string name)
         {
-            var message = $"Variable {name} does not exist in this context.";
+            var message = $"Invalid declaration: Variable {name} does not exist in this context.";
             Report(span, message);
         }
 
-        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        public void ReportCannotConvert(TextSpan span, Type fromType, Type toType)
         {
-            var message = $"Variable '{name}' already exists in this scope!";
+            var message = $"Invalid conversion: cannot convert type '{fromType}' to type '{toType}'";
             Report(span, message);
         }
     }

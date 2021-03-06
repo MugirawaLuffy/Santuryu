@@ -57,6 +57,10 @@ namespace Santuryu
                         previous = null;
                         continue;
                     }
+                    else if (input == "#kill")
+                    {
+                        System.Environment.Exit(0);
+                    }
                 }
 
                 textBuilder.AppendLine(input);
