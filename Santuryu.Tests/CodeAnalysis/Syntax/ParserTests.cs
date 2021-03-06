@@ -122,7 +122,7 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
             var syntaxTree = SyntaxTree.Parse(text);
             var root = syntaxTree.Root;
             var statement = root.Statement;
-            return Assert.IsType<ExpresionStatementSyntax>(statement).Expression;
+            return Assert.IsType<ExpressionStatementSyntax>(statement).Expression;
         }
 
         public static IEnumerable<object[]> GetBinaryOperatorPairsData()
