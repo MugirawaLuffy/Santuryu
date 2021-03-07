@@ -28,17 +28,21 @@ namespace Santuryu.CodeAnalysis.Syntax
         CloseBraceToken,
 
         //Keywords
+        ElseKeyword,
         FalseKeyword,
+        IfKeyword,
         TrueKeyword,
         LetKeyword,
         VarKeyword,
 
         //Nodes
         CompilationUnit,
+        ElseClause,
 
         //Statements
         BlockStatement,
         ExpressionStatement,
+        IfStatement,
         VariableDeclaration,
 
         //Expressions

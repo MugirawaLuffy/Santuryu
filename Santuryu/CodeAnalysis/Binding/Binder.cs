@@ -6,7 +6,6 @@ using Santuryu.CodeAnalysis.Syntax;
 
 namespace Santuryu.CodeAnalysis.Binding
 {
-
     internal sealed class Binder
     {
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
@@ -66,6 +65,8 @@ namespace Santuryu.CodeAnalysis.Binding
                     return BindVariableDeclaration((VariableDeclarationSyntax)syntax);
                 case SyntaxKind.ExpressionStatement:
                     return BindExpressionStatement((ExpressionStatementSyntax)syntax);
+                case SyntaxKind.IfStatement:
+                    return BindIfStatement((IfStatementSyntax)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
@@ -85,6 +86,13 @@ namespace Santuryu.CodeAnalysis.Binding
             _scope = _scope.Parent;
             return new BoundBlockStatement(statements.ToImmutable());
         }
+        private BoundStatement BindIfStatement(IfStatementSyntax syntax)
+        {
+            var condition = BindExpression(syntax.Condition, typeof(bool));
+            var thenStatement = BindStatement(syntax.ThenStatement);
+            var elseStatement = syntax.ElseClause == null ? null : BindStatement(syntax.ElseClause.ElseStatement);
+            return new BoundIfStatement(condition, thenStatement, elseStatement);
+        }
         private BoundStatement BindVariableDeclaration(VariableDeclarationSyntax syntax)
         {
             var name = syntax.Identifier.Text;
@@ -97,11 +105,19 @@ namespace Santuryu.CodeAnalysis.Binding
 
             return new BoundVariableDeclaration(variable, initializer);
         }
-
         private BoundStatement BindExpressionStatement(ExpressionStatementSyntax syntax)
         {
             var expression = BindExpression(syntax.Expression);
             return new BoundExpressionStatement(expression);
+        }
+
+        private BoundExpression BindExpression(ExpressionSyntax syntax, Type targetType)
+        {
+            var result = BindExpression(syntax);
+            if (result.Type != targetType)
+                _diagnostics.ReportCannotConvert(syntax.Span, result.Type, targetType);
+
+            return result;
         }
 
         private BoundExpression BindExpression(ExpressionSyntax syntax)

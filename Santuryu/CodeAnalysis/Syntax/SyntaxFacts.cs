@@ -54,10 +54,14 @@ namespace Santuryu.CodeAnalysis.Syntax
         {
             switch (text)
             {
+                case "else":
+                    return SyntaxKind.ElseKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
                 case "let":
                     return SyntaxKind.LetKeyword;
+                case "if":
+                    return SyntaxKind.IfKeyword;
                 case "true":
                     return SyntaxKind.TrueKeyword;
                 case "var":
@@ -128,6 +132,10 @@ namespace Santuryu.CodeAnalysis.Syntax
                     return "}";
                 case SyntaxKind.FalseKeyword:
                     return "false";
+                case SyntaxKind.ElseKeyword:
+                    return "else";
+                case SyntaxKind.IfKeyword:
+                    return "if";
                 case SyntaxKind.TrueKeyword:
                     return "true";
                 case SyntaxKind.LetKeyword:
