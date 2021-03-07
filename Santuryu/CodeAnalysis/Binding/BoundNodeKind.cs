@@ -7,6 +7,7 @@ namespace Santuryu.CodeAnalysis.Binding
         ExpressionStatement,
         VariableDeclaration,
         IfStatement,
+        WhileStatement,
 
         //Expressions
         LiteralExpression,
