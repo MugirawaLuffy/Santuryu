@@ -44,39 +44,11 @@ namespace Santuryu.CodeAnalysis
         [InlineData("{ var a = 0 if a == 4 a = 10 a }", 0)]
         [InlineData("{ var a = 0 if a == 0 a = 10 else a = 5 a }", 10)]
         [InlineData("{ var a = 0 if a == 4 a = 10 else a = 5 a }", 5)]
-        [InlineData("{ var i = 10 var result = 0 while i > 0 { result = result + i i = i -1} result }", 55)]
+        [InlineData("{ var i = 10 var result = 0 while i > 0 { result = result + i i = i - 1} result }", 55)]
         [InlineData("{ var result = 0 for i = 1 to 10 { result = result + i } result }", 55)]
         public void Evaluator_Computes_CorrectValues(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);
-        }
-
-        private static void AssertValue(string text, object expectedValue)
-        {
-            var syntaxTree = SyntaxTree.Parse(text);
-            var compilation = new Compilation(syntaxTree);
-            var variables = new Dictionary<VariableSymbol, object>();
-            var result = compilation.Evaluate(variables);
-
-            Assert.Empty(result.Diagnostics);
-            Assert.Equal(expectedValue, result.Value);
-        }
-        [Fact]
-        public void Evaluator_IfStatement_Reports_CannotConvert()
-        {
-            var text = @"
-                {
-                    var x = 0
-                    if [10]
-                        x = 10
-                }
-            ";
-
-            var diagnostics = @"
-                Cannot convert type 'System.Int32' to 'System.Boolean'.
-            ";
-
-            AssertDiagnostics(text, diagnostics);
         }
 
         [Fact]
@@ -99,6 +71,43 @@ namespace Santuryu.CodeAnalysis
 
             AssertDiagnostics(text, diagnostics);
         }
+
+        [Fact]
+        public void Evaluator_IfStatement_Reports_CannotConvert()
+        {
+            var text = @"
+                {
+                    var x = 0
+                    if [10]
+                        x = 10
+                }
+            ";
+
+            var diagnostics = @"
+                Cannot convert type 'System.Int32' to 'System.Boolean'.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_WhileStatement_Reports_CannotConvert()
+        {
+            var text = @"
+                {
+                    var x = 0
+                    while [10]
+                        x = 10
+                }
+            ";
+
+            var diagnostics = @"
+                Cannot convert type 'System.Int32' to 'System.Boolean'.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
         [Fact]
         public void Evaluator_ForStatement_Reports_CannotConvert_LowerBound()
         {
@@ -136,7 +145,7 @@ namespace Santuryu.CodeAnalysis
         }
 
         [Fact]
-        public void Evaluator_Name_Reports_Undefined()
+        public void Evaluator_NameExpression_Reports_Undefined()
         {
             var text = @"[x] * 10";
 
@@ -148,7 +157,31 @@ namespace Santuryu.CodeAnalysis
         }
 
         [Fact]
-        public void Evaluator_Assigned_Reports_Undefined()
+        public void Evaluator_UnaryExpression_Reports_Undefined()
+        {
+            var text = @"[+]true";
+
+            var diagnostics = @"
+                Unary operator '+' is not defined for type 'System.Boolean'.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_BinaryExpression_Reports_Undefined()
+        {
+            var text = @"10 [*] false";
+
+            var diagnostics = @"
+                Binary operator '*' is not defined for types 'System.Int32' and 'System.Boolean'.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_AssignmentExpression_Reports_Undefined()
         {
             var text = @"[x] = 10";
 
@@ -160,7 +193,7 @@ namespace Santuryu.CodeAnalysis
         }
 
         [Fact]
-        public void Evaluator_Assigned_Reports_CannotAssign()
+        public void Evaluator_AssignmentExpression_Reports_CannotAssign()
         {
             var text = @"
                 {
@@ -177,7 +210,7 @@ namespace Santuryu.CodeAnalysis
         }
 
         [Fact]
-        public void Evaluator_Assigned_Reports_CannotConvert()
+        public void Evaluator_AssignmentExpression_Reports_CannotConvert()
         {
             var text = @"
                 {
@@ -194,28 +227,28 @@ namespace Santuryu.CodeAnalysis
         }
 
         [Fact]
-        public void Evaluator_Unary_Reports_Undefined()
+        public void Evaluator_NameExpression_Reports_NoErrorForInsertedToken()
         {
-            var text = @"[+]true";
+            var text = @"[]";
 
             var diagnostics = @"
-                Unary operator '+' is not defined for type 'System.Boolean'.
+                Unexpected token <EndOfFileToken>, expected <IdentifierToken>.
             ";
 
             AssertDiagnostics(text, diagnostics);
         }
 
-        [Fact]
-        public void Evaluator_Binary_Reports_Undefined()
+        private static void AssertValue(string text, object expectedValue)
         {
-            var text = @"10 [*] false";
+            var syntaxTree = SyntaxTree.Parse(text);
+            var compilation = new Compilation(syntaxTree);
+            var variables = new Dictionary<VariableSymbol, object>();
+            var result = compilation.Evaluate(variables);
 
-            var diagnostics = @"
-                Binary operator '*' is not defined for types 'System.Int32' and 'System.Boolean'.
-            ";
-
-            AssertDiagnostics(text, diagnostics);
+            Assert.Empty(result.Diagnostics);
+            Assert.Equal(expectedValue, result.Value);
         }
+
         private void AssertDiagnostics(string text, string diagnosticText)
         {
             var annotatedText = AnnotatedText.Parse(text);
