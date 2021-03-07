@@ -35,6 +35,8 @@ namespace Santuryu.CodeAnalysis.Syntax
         LetKeyword,
         VarKeyword,
         WhileKeyword,
+        ForKeyword,
+        ToKeyword,
 
         //Nodes
         CompilationUnit,
@@ -46,6 +48,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         IfStatement,
         VariableDeclaration,
         WhileStatement,
+        ForStatement,
 
         //Expressions
         LiteralExpression,
