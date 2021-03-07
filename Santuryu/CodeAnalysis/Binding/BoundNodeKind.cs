@@ -6,6 +6,9 @@ namespace Santuryu.CodeAnalysis.Binding
         BlockStatement,
         ExpressionStatement,
         VariableDeclaration,
+        IfStatement,
+        WhileStatement,
+        ForStatement,
 
         //Expressions
         LiteralExpression,

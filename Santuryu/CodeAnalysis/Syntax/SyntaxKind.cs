@@ -19,23 +19,36 @@ namespace Santuryu.CodeAnalysis.Syntax
         PipePipeToken,
         EqualsEqualsToken,
         BangEqualsToken,
+        LessToken,
+        LessOrEqualsToken,
+        GreaterToken,
+        GreaterOrEqualsToken,
         EqualsToken,
         OpenBraceToken,
         CloseBraceToken,
 
         //Keywords
+        ElseKeyword,
         FalseKeyword,
+        IfKeyword,
         TrueKeyword,
         LetKeyword,
         VarKeyword,
+        WhileKeyword,
+        ForKeyword,
+        ToKeyword,
 
         //Nodes
         CompilationUnit,
+        ElseClause,
 
         //Statements
         BlockStatement,
         ExpressionStatement,
+        IfStatement,
         VariableDeclaration,
+        WhileStatement,
+        ForStatement,
 
         //Expressions
         LiteralExpression,
@@ -44,6 +57,5 @@ namespace Santuryu.CodeAnalysis.Syntax
         ParenthesizedExpression,
         NameExpression,
         AssignmentExpression,
-
     }
 }
