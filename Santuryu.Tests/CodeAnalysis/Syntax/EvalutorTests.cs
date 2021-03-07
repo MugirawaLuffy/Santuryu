@@ -6,6 +6,7 @@ using Xunit;
 
 namespace Santuryu.CodeAnalysis
 {
+
     public class EvaluationTests
     {
         [Theory]
