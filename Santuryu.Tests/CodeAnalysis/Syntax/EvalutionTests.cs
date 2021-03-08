@@ -35,10 +35,14 @@ namespace Santuryu.CodeAnalysis
         [InlineData("true == false", false)]
         [InlineData("false != false", false)]
         [InlineData("true != false", true)]
+        [InlineData("true && true", true)]
+        [InlineData(" false || false", false)]
         [InlineData("true", true)]
         [InlineData("false", false)]
         [InlineData("!true", false)]
         [InlineData("!false", true)]
+        [InlineData("var a = 10", 10)]
+        [InlineData("{var a = 10 (a * a)}", 100)]
         [InlineData("{ var a = 0 (a = 10) * a }", 100)]
         [InlineData("{ var a = 0 if a == 0 a = 10 a }", 10)]
         [InlineData("{ var a = 0 if a == 4 a = 10 a }", 0)]
@@ -225,7 +229,21 @@ namespace Santuryu.CodeAnalysis
 
             AssertDiagnostics(text, diagnostics);
         }
+        [Fact]
+        public void Evaluator_BlockStatement_NoInfiniteLoop()
+        {
+            var text = @"
+                {
+                [)][]
+            ";
 
+            var diagnostics = @"
+                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>.
+                Unexpected token <EndOfFileToken>, expected <CloseBraceToken>.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
         [Fact]
         public void Evaluator_NameExpression_Reports_NoErrorForInsertedToken()
         {
