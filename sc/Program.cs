@@ -83,11 +83,6 @@ namespace Santuryu
                                             ? new Compilation(syntaxTree)
                                             : previous.ContinueWith(syntaxTree);
 
-                var result = compilation.Evaluate(variables);
-
-
-                var diagnostics = result.Diagnostics;
-
                 if (showTree)
                 {
                     syntaxTree.Root.WriteTo(Console.Out);
@@ -96,6 +91,9 @@ namespace Santuryu
                 {
                     compilation.EmitTree(Console.Out);
                 }
+
+                var result = compilation.Evaluate(variables);
+                var diagnostics = result.Diagnostics;
 
                 if (!diagnostics.Any())
                 {

@@ -5,55 +5,68 @@ using Santuryu.CodeAnalysis.Binding;
 
 namespace Santuryu.CodeAnalysis
 {
-
     internal sealed class Evaluator
     {
-        private readonly BoundStatement _root;
+        private readonly BoundBlockStatement _root;
         private readonly Dictionary<VariableSymbol, object> _variables;
 
         private object _lastValue;
 
-        public Evaluator(BoundStatement root, Dictionary<VariableSymbol, object> variables)
+        public Evaluator(BoundBlockStatement root, Dictionary<VariableSymbol, object> variables)
         {
             _root = root;
             _variables = variables;
         }
+
         public object Evaluate()
         {
-            EvaluateStatement(_root);
-            return _lastValue;
-        }
+            var labelToIndex = new Dictionary<LabelSymbol, int>();
 
-        private void EvaluateStatement(BoundStatement node)
-        {
-            switch (node.Kind)
+            for (var i = 0; i < _root.Statements.Length; i++)
             {
-                case BoundNodeKind.BlockStatement:
-                    EvaluateBlockStatement((BoundBlockStatement)node);
-                    break;
-                case BoundNodeKind.VariableDeclaration:
-                    EvaluateVariableDeclaration((BoundVariableDeclaration)node);
-                    break;
-                case BoundNodeKind.IfStatement:
-                    EvaluateIfStatement((BoundIfStatement)node);
-                    break;
-                case BoundNodeKind.WhileStatement:
-                    EvaluateWhileStatement((BoundWhileStatement)node);
-                    break;
-                case BoundNodeKind.ExpressionStatement:
-                    EvaluateExpressionStatement((BoundExpressionStatement)node);
-                    break;
-                default:
-                    throw new Exception($"Unexpected node statement: {node.Kind}");
+                if (_root.Statements[i] is BoundLabelStatement l)
+                    labelToIndex.Add(l.Label, i + 1);
             }
-        }
 
+            var index = 0;
 
+            while (index < _root.Statements.Length)
+            {
+                var s = _root.Statements[index];
 
-        private void EvaluateBlockStatement(BoundBlockStatement node)
-        {
-            foreach (var statement in node.Statements)
-                EvaluateStatement(statement);
+                switch (s.Kind)
+                {
+                    case BoundNodeKind.VariableDeclaration:
+                        EvaluateVariableDeclaration((BoundVariableDeclaration)s);
+                        index++;
+                        break;
+                    case BoundNodeKind.ExpressionStatement:
+                        EvaluateExpressionStatement((BoundExpressionStatement)s);
+                        index++;
+                        break;
+                    case BoundNodeKind.GotoStatement:
+                        var gs = (BoundGotoStatement)s;
+                        index = labelToIndex[gs.Label];
+                        break;
+                    case BoundNodeKind.ConditionalGotoStatement:
+                        var cgs = (BoundConditionalGotoStatement)s;
+                        var condition = (bool)EvaluateExpression(cgs.Condition);
+                        if (condition && !cgs.JumpIfFalse ||
+                            !condition && cgs.JumpIfFalse)
+                            index = labelToIndex[cgs.Label];
+                        else
+                            index++;
+                        break;
+                    case BoundNodeKind.LabelStatement:
+                        index++;
+                        break;
+                    default:
+                        throw new Exception($"Unexpected node {s.Kind}");
+                }
+
+            }
+
+            return _lastValue;
         }
 
         private void EvaluateVariableDeclaration(BoundVariableDeclaration node)
@@ -66,21 +79,6 @@ namespace Santuryu.CodeAnalysis
         private void EvaluateExpressionStatement(BoundExpressionStatement node)
         {
             _lastValue = EvaluateExpression(node.Expression);
-        }
-
-        private void EvaluateIfStatement(BoundIfStatement node)
-        {
-            var condition = (bool)EvaluateExpression(node.Condition);
-            if (condition)
-                EvaluateStatement(node.ThenStatement);
-            else if (node.ElseStatement != null)
-                EvaluateStatement(node.ElseStatement);
-        }
-
-        private void EvaluateWhileStatement(BoundWhileStatement node)
-        {
-            while ((bool)EvaluateExpression(node.Condition))
-                EvaluateStatement(node.Body);
         }
 
         private object EvaluateExpression(BoundExpression node)
@@ -98,7 +96,7 @@ namespace Santuryu.CodeAnalysis
                 case BoundNodeKind.BinaryExpression:
                     return EvaluateBinaryExpression((BoundBinaryExpression)node);
                 default:
-                    throw new Exception($"Unexpected node: {node.Kind}");
+                    throw new Exception($"Unexpected node {node.Kind}");
             }
         }
 
@@ -119,7 +117,6 @@ namespace Santuryu.CodeAnalysis
             return value;
         }
 
-
         private object EvaluateUnaryExpression(BoundUnaryExpression u)
         {
             var operand = EvaluateExpression(u.Operand);
@@ -135,10 +132,9 @@ namespace Santuryu.CodeAnalysis
                 case BoundUnaryOperatorKind.OnesComplement:
                     return ~(int)operand;
                 default:
-                    throw new Exception($"Unexpected unary operator: {u.Op}");
+                    throw new Exception($"Unexpected unary operator {u.Op}");
             }
         }
-
 
         private object EvaluateBinaryExpression(BoundBinaryExpression b)
         {
@@ -155,6 +151,21 @@ namespace Santuryu.CodeAnalysis
                     return (int)left * (int)right;
                 case BoundBinaryOperatorKind.Division:
                     return (int)left / (int)right;
+                case BoundBinaryOperatorKind.BitwiseAnd:
+                    if (b.Type == (typeof(int)))
+                        return (int)left & (int)right;
+                    else
+                        return (bool)left & (bool)right;
+                case BoundBinaryOperatorKind.BitwiseOr:
+                    if (b.Type == (typeof(int)))
+                        return (int)left | (int)right;
+                    else
+                        return (bool)left | (bool)right;
+                case BoundBinaryOperatorKind.BitwiseXor:
+                    if (b.Type == (typeof(int)))
+                        return (int)left ^ (int)right;
+                    else
+                        return (bool)left ^ (bool)right;
                 case BoundBinaryOperatorKind.LogicalAnd:
                     return (bool)left && (bool)right;
                 case BoundBinaryOperatorKind.LogicalOr:
@@ -171,23 +182,8 @@ namespace Santuryu.CodeAnalysis
                     return (int)left > (int)right;
                 case BoundBinaryOperatorKind.GreaterOrEquals:
                     return (int)left >= (int)right;
-                case BoundBinaryOperatorKind.BitwiseAnd:
-                    if (b.Type == (typeof(int)))
-                        return (int)left & (int)right;
-                    else
-                        return (bool)left & (bool)right;
-                case BoundBinaryOperatorKind.BitwiseOr:
-                    if (b.Type == (typeof(int)))
-                        return (int)left | (int)right;
-                    else
-                        return (bool)left | (bool)right;
-                case BoundBinaryOperatorKind.BitwiseXor:
-                    if (b.Type == (typeof(int)))
-                        return (int)left ^ (int)right;
-                    else
-                        return (bool)left ^ (bool)right;
                 default:
-                    throw new Exception($"Unexpected binary operator: {b.Op}");
+                    throw new Exception($"Unexpected binary operator {b.Op}");
             }
         }
     }
