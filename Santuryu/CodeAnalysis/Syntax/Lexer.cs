@@ -7,7 +7,9 @@ namespace Santuryu.CodeAnalysis.Syntax
     {
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
         private readonly SourceText _text;
+
         private int _position;
+
         private int _start;
         private SyntaxKind _kind;
         private object _value;
@@ -76,18 +78,36 @@ namespace Santuryu.CodeAnalysis.Syntax
                     _kind = SyntaxKind.CloseBraceToken;
                     _position++;
                     break;
+                case '~':
+                    _kind = SyntaxKind.TildeToken;
+                    _position++;
+                    break;
+                case '^':
+                    _kind = SyntaxKind.HatToken;
+                    _position++;
+                    break;
                 case '&':
-                    if (Lookahead == '&')
+                    _position++;
+                    if (Current != '&')
                     {
-                        _position += 2;
+                        _kind = SyntaxKind.AmpersandToken;
+                    }
+                    else
+                    {
                         _kind = SyntaxKind.AmpersandAmpersandToken;
+                        _position++;
                     }
                     break;
                 case '|':
-                    if (Lookahead == '|')
+                    _position++;
+                    if (Current != '|')
                     {
-                        _position += 2;
+                        _kind = SyntaxKind.PipeToken;
+                    }
+                    else
+                    {
                         _kind = SyntaxKind.PipePipeToken;
+                        _position++;
                     }
                     break;
                 case '=':
@@ -148,12 +168,12 @@ namespace Santuryu.CodeAnalysis.Syntax
                 case '7':
                 case '8':
                 case '9':
-                    ReadNumberToken();
+                    ReadNumber();
                     break;
                 case ' ':
                 case '\t':
                 case '\n':
-                case '\r': //common whitespace checks
+                case '\r':
                     ReadWhiteSpace();
                     break;
                 default:
@@ -171,7 +191,6 @@ namespace Santuryu.CodeAnalysis.Syntax
                         _position++;
                     }
                     break;
-
             }
 
             var length = _position - _start;
@@ -190,7 +209,7 @@ namespace Santuryu.CodeAnalysis.Syntax
             _kind = SyntaxKind.WhitespaceToken;
         }
 
-        private void ReadNumberToken()
+        private void ReadNumber()
         {
             while (char.IsDigit(Current))
                 _position++;
