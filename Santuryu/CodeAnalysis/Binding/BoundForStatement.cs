@@ -1,4 +1,4 @@
-    
+
 namespace Santuryu.CodeAnalysis.Binding
 {
     internal sealed class BoundForStatement : BoundStatement
@@ -12,7 +12,7 @@ namespace Santuryu.CodeAnalysis.Binding
         }
 
         public override BoundNodeKind Kind => BoundNodeKind.ForStatement;
-        public VariableSymbol Variable { get; }
+        public VariableSymbol Variable { get; set; }
         public BoundExpression LowerBound { get; }
         public BoundExpression UpperBound { get; }
         public BoundStatement Body { get; }
