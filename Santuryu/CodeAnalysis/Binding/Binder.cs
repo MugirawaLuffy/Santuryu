@@ -6,6 +6,7 @@ using Santuryu.CodeAnalysis.Syntax;
 
 namespace Santuryu.CodeAnalysis.Binding
 {
+
     internal sealed class Binder
     {
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
@@ -114,7 +115,7 @@ namespace Santuryu.CodeAnalysis.Binding
             _scope = new BoundScope(_scope);
 
             var name = syntax.Identifier.Text;
-            var variable = new VariableSymbol(name, true, typeof(int));
+            var variable = new VariableSymbol(name, false, typeof(int));
             if (!_scope.TryDeclare(variable))
                 _diagnostics.ReportVariableAlreadyDeclared(syntax.Identifier.Span, name);
 

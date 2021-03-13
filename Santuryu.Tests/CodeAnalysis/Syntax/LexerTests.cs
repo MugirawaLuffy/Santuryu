@@ -151,6 +151,14 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
                 return true;
             if (t1Kind == SyntaxKind.GreaterToken && t2Kind == SyntaxKind.EqualsEqualsToken)
                 return true;
+            if (t1Kind == SyntaxKind.AmpersandToken && t2Kind == SyntaxKind.AmpersandToken)
+                return true;
+            if (t1Kind == SyntaxKind.AmpersandToken && t2Kind == SyntaxKind.AmpersandAmpersandToken)
+                return true;
+            if (t1Kind == SyntaxKind.PipeToken && t2Kind == SyntaxKind.PipeToken)
+                return true;
+            if (t1Kind == SyntaxKind.PipeToken && t2Kind == SyntaxKind.PipePipeToken)
+                return true;
 
             //TODO: more cases
 

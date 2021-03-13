@@ -12,6 +12,7 @@ namespace Santuryu.CodeAnalysis.Syntax
                 case SyntaxKind.PlusToken:
                 case SyntaxKind.MinusToken:
                 case SyntaxKind.BangToken:
+                case SyntaxKind.TildeToken:
                     return 6;
 
                 default:
@@ -39,10 +40,13 @@ namespace Santuryu.CodeAnalysis.Syntax
                 case SyntaxKind.GreaterOrEqualsToken:
                     return 3;
 
+                case SyntaxKind.AmpersandToken:
                 case SyntaxKind.AmpersandAmpersandToken:
                     return 2;
 
+                case SyntaxKind.PipeToken:
                 case SyntaxKind.PipePipeToken:
+                case SyntaxKind.HatToken:
                     return 1;
 
                 default:
@@ -112,6 +116,8 @@ namespace Santuryu.CodeAnalysis.Syntax
                     return "!";
                 case SyntaxKind.EqualsToken:
                     return "=";
+                case SyntaxKind.TildeToken:
+                    return "~";
                 case SyntaxKind.LessToken:
                     return "<";
                 case SyntaxKind.LessOrEqualsToken:
@@ -120,12 +126,18 @@ namespace Santuryu.CodeAnalysis.Syntax
                     return ">";
                 case SyntaxKind.GreaterOrEqualsToken:
                     return ">=";
+                case SyntaxKind.AmpersandToken:
+                    return "&";
                 case SyntaxKind.AmpersandAmpersandToken:
                     return "&&";
+                case SyntaxKind.PipeToken:
+                    return "|";
                 case SyntaxKind.PipePipeToken:
                     return "||";
                 case SyntaxKind.EqualsEqualsToken:
                     return "==";
+                case SyntaxKind.HatToken:
+                    return "^";
                 case SyntaxKind.BangEqualsToken:
                     return "!=";
                 case SyntaxKind.OpenParenthesisToken:
