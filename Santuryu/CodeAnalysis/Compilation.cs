@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using Santuryu.CodeAnalysis.Binding;
 using Santuryu.CodeAnalysis.Syntax;
+using Santuryu.CodeAnalysis.Lowering;
 
 namespace Santuryu.CodeAnalysis
 {
@@ -53,14 +54,22 @@ namespace Santuryu.CodeAnalysis
             if (diagnostics.Any())
                 return new EvaluationResult(diagnostics, null);
 
-            var evaluator = new Evaluator(GlobalScope.Statement, variables);
+            var statement = GetStatement();
+            var evaluator = new Evaluator(statement, variables);
             var value = evaluator.Evaluate();
             return new EvaluationResult(ImmutableArray<Diagnostic>.Empty, value);
         }
 
         public void EmitTree(TextWriter writer)
         {
-            GlobalScope.Statement.WriteTo(writer);
+            var statement = GetStatement();
+            statement.WriteTo(writer);
+        }
+
+        private BoundStatement GetStatement()
+        {
+            var result = GlobalScope.Statement;
+            return Lowerer.Lower(result);
         }
     }
 }
