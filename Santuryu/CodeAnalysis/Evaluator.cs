@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Santuryu.CodeAnalysis.Binding;
+using Santuryu.CodeAnalysis.Symbols;
 
 namespace Santuryu.CodeAnalysis
 {
@@ -20,7 +21,7 @@ namespace Santuryu.CodeAnalysis
 
         public object Evaluate()
         {
-            var labelToIndex = new Dictionary<LabelSymbol, int>();
+            var labelToIndex = new Dictionary<BoundLabel, int>();
 
             for (var i = 0; i < _root.Statements.Length; i++)
             {

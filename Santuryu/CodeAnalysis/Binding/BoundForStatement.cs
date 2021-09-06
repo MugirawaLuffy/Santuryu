@@ -1,4 +1,5 @@
 
+using Santuryu.CodeAnalysis.Symbols;
 namespace Santuryu.CodeAnalysis.Binding
 {
     internal sealed class BoundForStatement : BoundStatement

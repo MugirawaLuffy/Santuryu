@@ -1,5 +1,5 @@
 using System.Collections.Immutable;
-
+using Santuryu.CodeAnalysis.Symbols;
 namespace Santuryu.CodeAnalysis.Binding
 {
     internal sealed class BoundGlobalScope

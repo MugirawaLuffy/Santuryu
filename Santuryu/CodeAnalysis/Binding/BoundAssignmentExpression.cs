@@ -1,5 +1,5 @@
 using System;
-
+using Santuryu.CodeAnalysis.Symbols;
 namespace Santuryu.CodeAnalysis.Binding
 {
     internal sealed class BoundAssignmentExpression : BoundExpression

@@ -1,6 +1,7 @@
 using System;
 
-namespace Santuryu.CodeAnalysis
+namespace Santuryu.CodeAnalysis.Symbols
+
 {
     public sealed class VariableSymbol
     {

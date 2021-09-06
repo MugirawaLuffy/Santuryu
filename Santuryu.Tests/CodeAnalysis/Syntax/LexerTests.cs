@@ -119,8 +119,8 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
                 (SyntaxKind.NumberToken, "123"),
                 (SyntaxKind.IdentifierToken, "a"),
                 (SyntaxKind.IdentifierToken, "abc"),
-                //(SyntaxKind.StringToken, "\"Test\""),
-                //(SyntaxKind.StringToken, "\"Te\"\"st\""),
+                (SyntaxKind.StringToken, "\"Test\""),
+                (SyntaxKind.StringToken, "\"Te\"\"st\""),
             };
             return fixedTokens.Concat(dynamicTokens);
         }

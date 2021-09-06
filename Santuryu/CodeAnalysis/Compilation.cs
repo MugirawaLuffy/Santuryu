@@ -8,7 +8,7 @@ using System.Threading;
 using Santuryu.CodeAnalysis.Binding;
 using Santuryu.CodeAnalysis.Syntax;
 using Santuryu.CodeAnalysis.Lowering;
-
+using Santuryu.CodeAnalysis.Symbols;
 namespace Santuryu.CodeAnalysis
 {
     public sealed class Compilation

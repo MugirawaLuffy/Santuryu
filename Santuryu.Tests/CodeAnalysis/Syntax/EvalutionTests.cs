@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Santuryu.CodeAnalysis.Syntax;
 using Xunit;
+using Santuryu.CodeAnalysis.Symbols;
 
 namespace Santuryu.CodeAnalysis
 {

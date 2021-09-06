@@ -1,3 +1,4 @@
+using Santuryu.CodeAnalysis.Symbols;
 namespace Santuryu.CodeAnalysis.Binding
 {
     internal abstract class BoundStatement : BoundNode

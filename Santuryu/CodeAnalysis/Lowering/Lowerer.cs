@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Santuryu.CodeAnalysis.Binding;
 using Santuryu.CodeAnalysis.Syntax;
-
+using Santuryu.CodeAnalysis.Symbols;
 namespace Santuryu.CodeAnalysis.Lowering
 {
     internal sealed class Lowerer : BoundTreeRewriter

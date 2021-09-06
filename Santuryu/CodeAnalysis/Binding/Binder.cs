@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Santuryu.CodeAnalysis.Syntax;
+using Santuryu.CodeAnalysis.Symbols;
 
 namespace Santuryu.CodeAnalysis.Binding
 {
