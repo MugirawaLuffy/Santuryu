@@ -230,7 +230,8 @@ namespace Santuryu.CodeAnalysis.Syntax
                 case SyntaxKind.FalseKeyword:
                 case SyntaxKind.TrueKeyword:
                     return ParseBooleanLiteral();
-
+                case SyntaxKind.StringToken:
+                    return ParseStringLiteral();
                 case SyntaxKind.NumberToken:
                     return ParseNumberLiteral();
 
@@ -239,7 +240,11 @@ namespace Santuryu.CodeAnalysis.Syntax
                     return ParseNameExpression();
             }
         }
-
+        private ExpressionSyntax ParseStringLiteral()
+        {
+            var stringToken = MatchToken(SyntaxKind.StringToken);
+            return new LiteralExpressionSyntax(stringToken);
+        }
         private ExpressionSyntax ParseParenthesizedExpression()
         {
             var left = MatchToken(SyntaxKind.OpenParenthesisToken);
