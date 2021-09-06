@@ -31,6 +31,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         EqualsToken,
         OpenBraceToken,
         CloseBraceToken,
+        CommaToken,
 
         //Keywords
         ElseKeyword,
@@ -62,5 +63,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         ParenthesizedExpression,
         NameExpression,
         AssignmentExpression,
+        CallExpression,
+
     }
 }

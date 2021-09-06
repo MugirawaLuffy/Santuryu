@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 namespace Santuryu.CodeAnalysis.Syntax
 {
+
     public class AssignmentExpressionSyntax : ExpressionSyntax
     {
         public AssignmentExpressionSyntax(SyntaxToken identifierToken, SyntaxToken equalsToken, ExpressionSyntax expression)
