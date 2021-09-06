@@ -1,5 +1,5 @@
 using System;
-
+using Santuryu.CodeAnalysis.Symbols;
 namespace Santuryu.CodeAnalysis.Binding
 {
     internal sealed class BoundBinaryExpression : BoundExpression
@@ -11,7 +11,7 @@ namespace Santuryu.CodeAnalysis.Binding
             Right = right;
         }
 
-        public override Type Type => Op.Type;
+        public override TypeSymbol Type => Op.Type;
         public override BoundNodeKind Kind => BoundNodeKind.BinaryExpression;
 
         public BoundExpression Left { get; }

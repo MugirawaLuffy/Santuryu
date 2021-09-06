@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Santuryu.CodeAnalysis.Text;
 using System;
 using System.Text;
+using Santuryu.CodeAnalysis.Symbols;
 
 namespace Santuryu.CodeAnalysis.Syntax
 {
@@ -264,8 +265,7 @@ namespace Santuryu.CodeAnalysis.Syntax
             var length = _position - _start;
             var text = _text.ToString(_start, length);
             if (!int.TryParse(text, out var value))
-                _diagnostics.ReportInvalidNumber(new TextSpan(_start, length), text, typeof(int));
-
+                _diagnostics.ReportInvalidNumber(new TextSpan(_start, length), text, TypeSymbol.Int);
             _value = value;
             _kind = SyntaxKind.NumberToken;
         }
