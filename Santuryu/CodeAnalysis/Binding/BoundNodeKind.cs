@@ -14,6 +14,7 @@ namespace Santuryu.CodeAnalysis.Binding
         ConditionalGotoStatement,
 
         //Expressions
+        ErrorExpression,
         LiteralExpression,
         UnaryExpression,
         VariableExpression,
