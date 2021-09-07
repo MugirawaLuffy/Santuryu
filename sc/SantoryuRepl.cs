@@ -9,6 +9,7 @@ namespace Santuryu
 {
     internal sealed class SantoryuRepl : Repl
     {
+
         private Compilation _previous;
         private bool _showTree;
         private bool _showProgram;

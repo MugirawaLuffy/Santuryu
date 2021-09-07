@@ -136,9 +136,9 @@ namespace Santuryu.CodeAnalysis.Binding
 
         private BoundStatement BindExpressionStatement(ExpressionStatementSyntax syntax)
         {
-            var expression = BindExpression(syntax.Expression);
-            //var expression = BindExpression(syntax.Expression, canBeVoid: true);
+            var expression = BindExpression(syntax.Expression, canBeVoid: true);
             return new BoundExpressionStatement(expression);
+
         }
 
         private BoundExpression BindExpression(ExpressionSyntax syntax, TypeSymbol targetType)
@@ -153,7 +153,19 @@ namespace Santuryu.CodeAnalysis.Binding
             return result;
         }
 
-        private BoundExpression BindExpression(ExpressionSyntax syntax)
+        private BoundExpression BindExpression(ExpressionSyntax syntax, bool canBeVoid = false)
+        {
+            var result = BindExpressionInternal(syntax);
+            if (!canBeVoid && result.Type == TypeSymbol.Void)
+            {
+                _diagnostics.ReportExpressionMustHaveValue(syntax.Span);
+                return new BoundErrorExpression();
+            }
+
+            return result;
+        }
+
+        private BoundExpression BindExpressionInternal(ExpressionSyntax syntax)
         {
             switch (syntax.Kind)
             {
@@ -175,6 +187,29 @@ namespace Santuryu.CodeAnalysis.Binding
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
         }
+
+        /* private BoundExpression BindExpression(ExpressionSyntax syntax)
+        {
+            switch (syntax.Kind)
+            {
+                case SyntaxKind.ParenthesizedExpression:
+                    return BindParenthesizedExpression((ParenthesizedExpressionSyntax)syntax);
+                case SyntaxKind.LiteralExpression:
+                    return BindLiteralExpression((LiteralExpressionSyntax)syntax);
+                case SyntaxKind.NameExpression:
+                    return BindNameExpression((NameExpressionSyntax)syntax);
+                case SyntaxKind.AssignmentExpression:
+                    return BindAssignmentExpression((AssignmentExpressionSyntax)syntax);
+                case SyntaxKind.UnaryExpression:
+                    return BindUnaryExpression((UnaryExpressionSyntax)syntax);
+                case SyntaxKind.BinaryExpression:
+                    return BindBinaryExpression((BinaryExpressionSyntax)syntax);
+                case SyntaxKind.CallExpression:
+                    return BindCallExpression((CallExpressionSyntax)syntax);
+                default:
+                    throw new Exception($"Unexpected syntax {syntax.Kind}");
+            }
+        } */
 
         private BoundExpression BindCallExpression(CallExpressionSyntax syntax)
         {

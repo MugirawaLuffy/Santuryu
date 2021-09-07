@@ -14,6 +14,7 @@ namespace Santuryu
 
         public void Run()
         {
+            Console.Title = "Santuryu x84";
             while (true)
             {
                 var text = EditSubmission();
