@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "D:\\nils\\Santuryu\\sc\\sc.csproj": {}
+    "D:\\nils\\Santuryu\\sc\\": {}
   },
   "projects": {
     "D:\\nils\\Santuryu\\Santuryu\\Santuryu.csproj": {
@@ -65,12 +65,12 @@
         }
       }
     },
-    "D:\\nils\\Santuryu\\sc\\sc.csproj": {
+    "D:\\nils\\Santuryu\\sc\\": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\nils\\Santuryu\\sc\\sc.csproj",
+        "projectUniqueName": "D:\\nils\\Santuryu\\si\\si.csproj",
         "projectName": "sc",
-        "projectPath": "D:\\nils\\Santuryu\\sc\\sc.csproj",
+        "projectPath": "D:\\nils\\Santuryu\\si\\si.csproj",
         "packagesPath": "C:\\Users\\Nils\\.nuget\\packages\\",
         "outputPath": "D:\\nils\\Santuryu\\sc\\obj\\",
         "projectStyle": "PackageReference",

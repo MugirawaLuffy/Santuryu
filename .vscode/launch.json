@@ -13,9 +13,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             "OS-COMMENT4": "If you have changed target frameworks, make sure to update the program path.",
-            "program": "${workspaceFolder}/sc/bin/Debug/net5.0/sc.dll",
+            "program": "${workspaceFolder}/si/bin/Debug/net5.0/sc.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/sc",
+            "cwd": "${workspaceFolder}/si",
             "OS-COMMENT5": "For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console",
             "console": "externalTerminal",
             "stopAtEntry": false

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-dotnet run --project ./sc/sc.csproj
+dotnet run --project ./si/si.csproj

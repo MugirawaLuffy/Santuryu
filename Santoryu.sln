@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sc", "sc\sc.csproj", "{D28A826D-70CE-42FD-B115-92AADE8CA867}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "si", "si\csproj", "{D28A826D-70CE-42FD-B115-92AADE8CA867}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Santuryu", "Santuryu\Santuryu.csproj", "{BF6C6C0C-AA4D-468E-884C-29147C842249}"
 EndProject

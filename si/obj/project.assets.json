@@ -70,11 +70,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\nils\\Santuryu\\sc\\sc.csproj",
-      "projectName": "sc",
-      "projectPath": "D:\\nils\\Santuryu\\sc\\sc.csproj",
+      "projectUniqueName": "D:\\nils\\Santuryu\\si\\si.csproj",
+      "projectName": "si",
+      "projectPath": "D:\\nils\\Santuryu\\si\\si.csproj",
       "packagesPath": "C:\\Users\\Nils\\.nuget\\packages\\",
-      "outputPath": "D:\\nils\\Santuryu\\sc\\obj\\",
+      "outputPath": "D:\\nils\\Santuryu\\si\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Nils\\AppData\\Roaming\\NuGet\\NuGet.Config",
