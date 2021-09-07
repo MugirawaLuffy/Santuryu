@@ -23,4 +23,4 @@ namespace Santuryu.CodeAnalysis.Syntax
         public TypeClauseSyntax Type { get; }
         public BlockStatementSyntax Body { get; }
     }
-} 
+}

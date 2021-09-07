@@ -8,7 +8,7 @@ namespace Santuryu.CodeAnalysis.Symbols
         public FunctionSymbol(string name, ImmutableArray<ParameterSymbol> parameters, TypeSymbol type, FunctionDeclarationSyntax declaration = null)
             : base(name)
         {
-            Parameters = parameter;
+            Parameters = parameters;
             Type = type;
             Declaration = declaration;
         }

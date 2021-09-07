@@ -172,7 +172,7 @@ namespace Santuryu.CodeAnalysis
                         return (string)left + (string)right;
                 case BoundBinaryOperatorKind.Subtraction:
                     return (int)left - (int)right;
-                case BoundBinaryOperatorKind.Multiplication:
+                case BoundBinaryOperatorKind.Multiplikation:
                     return (int)left * (int)right;
                 case BoundBinaryOperatorKind.Division:
                     return (int)left / (int)right;

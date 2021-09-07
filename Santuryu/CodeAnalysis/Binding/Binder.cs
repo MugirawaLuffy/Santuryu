@@ -5,6 +5,7 @@ using System.Linq;
 using Santuryu.CodeAnalysis.Syntax;
 using Santuryu.CodeAnalysis.Symbols;
 using Santuryu.CodeAnalysis.Text;
+using Santuryu.CodeAnalysis.Lowering;
 
 namespace Santuryu.CodeAnalysis.Binding
 {
