@@ -4,7 +4,8 @@ namespace Santuryu.CodeAnalysis.Symbols
     {
         Function,
         Parameter,
-        Variable,
+        GlobalVariable,
+        LocalVariable,
         Type,
 
     }

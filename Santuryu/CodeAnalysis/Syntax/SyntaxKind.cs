@@ -45,11 +45,15 @@ namespace Santuryu.CodeAnalysis.Syntax
         DoKeyword,
         ForKeyword,
         ToKeyword,
+        FunctionKeyword,
 
         //Nodes
         CompilationUnit,
-        ElseClause,
+        FunctionDeclaration,
+        GlobalStatement,
+        Parameter,
         TypeClause,
+        ElseClause,
 
         //Statements
         BlockStatement,

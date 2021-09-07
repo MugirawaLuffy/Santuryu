@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\nils\\Santoryu\\Santuryu.Tests\\Santuryu.Tests.csproj": {}
+    "D:\\nils\\Santuryu\\Santuryu.Tests\\Santuryu.Tests.csproj": {}
   },
   "projects": {
-    "D:\\nils\\Santoryu\\Santuryu.Tests\\Santuryu.Tests.csproj": {
+    "D:\\nils\\Santuryu\\Santuryu.Tests\\Santuryu.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\nils\\Santoryu\\Santuryu.Tests\\Santuryu.Tests.csproj",
+        "projectUniqueName": "D:\\nils\\Santuryu\\Santuryu.Tests\\Santuryu.Tests.csproj",
         "projectName": "Santuryu.Tests",
-        "projectPath": "D:\\nils\\Santoryu\\Santuryu.Tests\\Santuryu.Tests.csproj",
+        "projectPath": "D:\\nils\\Santuryu\\Santuryu.Tests\\Santuryu.Tests.csproj",
         "packagesPath": "C:\\Users\\Nils\\.nuget\\packages\\",
-        "outputPath": "D:\\nils\\Santoryu\\Santuryu.Tests\\obj\\",
+        "outputPath": "D:\\nils\\Santuryu\\Santuryu.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nils\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -29,8 +29,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\nils\\Santoryu\\Santuryu\\Santuryu.csproj": {
-                "projectPath": "D:\\nils\\Santoryu\\Santuryu\\Santuryu.csproj"
+              "D:\\nils\\Santuryu\\Santuryu\\Santuryu.csproj": {
+                "projectPath": "D:\\nils\\Santuryu\\Santuryu\\Santuryu.csproj"
               }
             }
           }
@@ -85,14 +85,14 @@
         }
       }
     },
-    "D:\\nils\\Santoryu\\Santuryu\\Santuryu.csproj": {
+    "D:\\nils\\Santuryu\\Santuryu\\Santuryu.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\nils\\Santoryu\\Santuryu\\Santuryu.csproj",
+        "projectUniqueName": "D:\\nils\\Santuryu\\Santuryu\\Santuryu.csproj",
         "projectName": "Santuryu",
-        "projectPath": "D:\\nils\\Santoryu\\Santuryu\\Santuryu.csproj",
+        "projectPath": "D:\\nils\\Santuryu\\Santuryu\\Santuryu.csproj",
         "packagesPath": "C:\\Users\\Nils\\.nuget\\packages\\",
-        "outputPath": "D:\\nils\\Santoryu\\Santuryu\\obj\\",
+        "outputPath": "D:\\nils\\Santuryu\\Santuryu\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nils\\AppData\\Roaming\\NuGet\\NuGet.Config",
