@@ -21,5 +21,6 @@ namespace Santuryu.CodeAnalysis.Binding
         AssignmentExpression,
         BinaryExpression,
         CallExpression,
+        ConversionExpression,
     }
 }

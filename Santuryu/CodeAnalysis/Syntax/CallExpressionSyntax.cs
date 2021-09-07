@@ -2,8 +2,7 @@ using System.Collections.Immutable;
 
 namespace Santuryu.CodeAnalysis.Syntax
 {
-
-    public class CallExpressionSyntax : ExpressionSyntax
+    public sealed class CallExpressionSyntax : ExpressionSyntax
     {
         public CallExpressionSyntax(SyntaxToken identifier, SyntaxToken openParenthesisToken, SeparatedSyntaxList<ExpressionSyntax> arguments, SyntaxToken closeParenthesisToken)
         {
@@ -14,7 +13,6 @@ namespace Santuryu.CodeAnalysis.Syntax
         }
 
         public override SyntaxKind Kind => SyntaxKind.CallExpression;
-
         public SyntaxToken Identifier { get; }
         public SyntaxToken OpenParenthesisToken { get; }
         public SeparatedSyntaxList<ExpressionSyntax> Arguments { get; }

@@ -119,13 +119,6 @@ namespace Santuryu.CodeAnalysis.Syntax
             return new BlockStatementSyntax(openBraceToken, statements.ToImmutable(), closeBraceToken);
         }
 
-        private ExpressionStatementSyntax ParseExpressionStatement()
-
-        {
-            var expression = ParseExpression();
-            return new ExpressionStatementSyntax(expression);
-        }
-
         private StatementSyntax ParseVariableDeclaration()
         {
             var expected = Current.Kind == SyntaxKind.LetKeyword ? SyntaxKind.LetKeyword : SyntaxKind.VarKeyword;
@@ -173,6 +166,12 @@ namespace Santuryu.CodeAnalysis.Syntax
             var upperBound = ParseExpression();
             var body = ParseStatement();
             return new ForStatementSyntax(keyword, identifier, equalsToken, lowerBound, toKeyword, upperBound, body);
+        }
+
+        private ExpressionStatementSyntax ParseExpressionStatement()
+        {
+            var expression = ParseExpression();
+            return new ExpressionStatementSyntax(expression);
         }
 
         private ExpressionSyntax ParseExpression()
@@ -233,22 +232,17 @@ namespace Santuryu.CodeAnalysis.Syntax
                 case SyntaxKind.FalseKeyword:
                 case SyntaxKind.TrueKeyword:
                     return ParseBooleanLiteral();
-                case SyntaxKind.StringToken:
-                    return ParseStringLiteral();
+
                 case SyntaxKind.NumberToken:
                     return ParseNumberLiteral();
+
+                case SyntaxKind.StringToken:
+                    return ParseStringLiteral();
 
                 case SyntaxKind.IdentifierToken:
                 default:
                     return ParseNameOrCallExpression();
             }
-        }
-
-
-        private ExpressionSyntax ParseStringLiteral()
-        {
-            var stringToken = MatchToken(SyntaxKind.StringToken);
-            return new LiteralExpressionSyntax(stringToken);
         }
 
         private ExpressionSyntax ParseParenthesizedExpression()
@@ -272,10 +266,10 @@ namespace Santuryu.CodeAnalysis.Syntax
             return new LiteralExpressionSyntax(numberToken);
         }
 
-        private ExpressionSyntax ParseNameExpression()
+        private ExpressionSyntax ParseStringLiteral()
         {
-            var identifierToken = MatchToken(SyntaxKind.IdentifierToken);
-            return new NameExpressionSyntax(identifierToken);
+            var stringToken = MatchToken(SyntaxKind.StringToken);
+            return new LiteralExpressionSyntax(stringToken);
         }
 
         private ExpressionSyntax ParseNameOrCallExpression()
@@ -292,7 +286,6 @@ namespace Santuryu.CodeAnalysis.Syntax
             var openParenthesisToken = MatchToken(SyntaxKind.OpenParenthesisToken);
             var arguments = ParseArguments();
             var closeParenthesisToken = MatchToken(SyntaxKind.CloseParenthesisToken);
-
             return new CallExpressionSyntax(identifier, openParenthesisToken, arguments, closeParenthesisToken);
         }
 
@@ -314,6 +307,12 @@ namespace Santuryu.CodeAnalysis.Syntax
             }
 
             return new SeparatedSyntaxList<ExpressionSyntax>(nodesAndSeparators.ToImmutable());
+        }
+
+        private ExpressionSyntax ParseNameExpression()
+        {
+            var identifierToken = MatchToken(SyntaxKind.IdentifierToken);
+            return new NameExpressionSyntax(identifierToken);
         }
     }
 }
