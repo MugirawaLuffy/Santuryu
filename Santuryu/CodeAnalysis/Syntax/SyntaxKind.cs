@@ -41,6 +41,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         LetKeyword,
         VarKeyword,
         WhileKeyword,
+        DoKeyword,
         ForKeyword,
         ToKeyword,
 
@@ -54,6 +55,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         IfStatement,
         VariableDeclaration,
         WhileStatement,
+        DoWhileStatement,
         ForStatement,
 
         //Expressions
@@ -64,6 +66,5 @@ namespace Santuryu.CodeAnalysis.Syntax
         NameExpression,
         AssignmentExpression,
         CallExpression,
-
     }
 }

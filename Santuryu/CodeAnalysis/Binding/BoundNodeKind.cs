@@ -8,6 +8,7 @@ namespace Santuryu.CodeAnalysis.Binding
         VariableDeclaration,
         IfStatement,
         WhileStatement,
+        DoWhileStatement,
         ForStatement,
         LabelStatement,
         GotoStatement,

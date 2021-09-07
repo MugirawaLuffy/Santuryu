@@ -93,11 +93,13 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
             foreach (var t in GetTokens().Concat(GetSeparators()))
                 yield return new object[] { t.kind, t.text };
         }
+
         public static IEnumerable<object[]> GetTokenPairsData()
         {
             foreach (var t in GetTokenPairs())
                 yield return new object[] { t.t1Kind, t.t1Text, t.t2Kind, t.t2Text };
         }
+
         public static IEnumerable<object[]> GetTokenPairsWithSeparatorData()
         {
             foreach (var t in GetTokenPairsWithSeparator())
@@ -124,6 +126,7 @@ namespace Santuryu.Tests.CodeAnalysis.Syntax
             };
             return fixedTokens.Concat(dynamicTokens);
         }
+
         private static IEnumerable<(SyntaxKind kind, string text)> GetSeparators()
         {
             return new[]
