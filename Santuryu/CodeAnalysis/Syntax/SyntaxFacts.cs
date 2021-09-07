@@ -84,6 +84,8 @@ namespace Santuryu.CodeAnalysis.Syntax
                     return SyntaxKind.ToKeyword;
                 case "function":
                     return SyntaxKind.FunctionKeyword;
+                case "return":
+                    return SyntaxKind.ReturnKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
             }
@@ -186,6 +188,8 @@ namespace Santuryu.CodeAnalysis.Syntax
                     return "to";
                 case SyntaxKind.FunctionKeyword:
                     return "function";
+                case SyntaxKind.ReturnKeyword:
+                    return "return";
                 default:
                     return null;
             }

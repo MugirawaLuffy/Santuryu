@@ -35,6 +35,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         ColonToken,
         CommaToken,
         IdentifierToken,
+        ReturnKeyword,
 
         //Keywords
         ElseKeyword,
@@ -66,6 +67,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         ForStatement,
         BreakStatement,
         ContinueStatement,
+        ReturnStatement,
         ExpressionStatement,
 
         //Expressions

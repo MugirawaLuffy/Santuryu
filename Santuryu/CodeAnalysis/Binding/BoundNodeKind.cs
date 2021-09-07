@@ -13,6 +13,7 @@ namespace Santuryu.CodeAnalysis.Binding
         LabelStatement,
         GotoStatement,
         ConditionalGotoStatement,
+        ReturnStatement,
 
         //Expressions
         ErrorExpression,

@@ -63,15 +63,33 @@ namespace Santuryu.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportParameterAlreadyDeclared(TextSpan span, string parameterName)
+        {
+            var message = $"A parameter with the name '{parameterName}' already exists.";
+            Report(span, message);
+        }
+
         public void ReportUndefinedName(TextSpan span, string name)
         {
             var message = $"Variable '{name}' doesn't exist.";
             Report(span, message);
         }
 
+        public void ReportUndefinedType(TextSpan span, string name)
+        {
+            var message = $"Type '{name}' doesn't exist.";
+            Report(span, message);
+        }
+
         public void ReportCannotConvert(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
         {
             var message = $"Cannot convert type '{fromType}' to '{toType}'.";
+            Report(span, message);
+        }
+
+        public void ReportCannotConvertImplicitly(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
+        {
+            var message = $"Cannot convert type '{fromType}' to '{toType}'. An explicit conversion exists (are you missing a cast?)";
             Report(span, message);
         }
 
@@ -84,18 +102,6 @@ namespace Santuryu.CodeAnalysis
         public void ReportCannotAssign(TextSpan span, string name)
         {
             var message = $"Variable '{name}' is read-only and cannot be assigned to.";
-            Report(span, message);
-        }
-
-        public void ReportUndefinedType(TextSpan span, string name)
-        {
-            var message = $"Type '{name}' doesn't exist.";
-            Report(span, message);
-        }
-
-        public void ReportCannotConvertImplicitly(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
-        {
-            var message = $"Cannot convert type '{fromType}' to '{toType}'. An explicit conversion exists (are you missing a cast?)";
             Report(span, message);
         }
 
@@ -123,20 +129,27 @@ namespace Santuryu.CodeAnalysis
             Report(span, message);
         }
 
-        public void ReportParameterAlreadyDeclared(TextSpan span, string parameterName)
-        {
-            var message = $"A parameter with the name '{parameterName}' already exists.";
-            Report(span, message);
-        }
-        public void XXX_ReportFunctionsAreUnsupported(TextSpan span)
-        {
-            var message = "Functions with return values are unsupported.";
-            Report(span, message);
-        }
-
         public void ReportInvalidBreakOrContinue(TextSpan span, string text)
         {
             var message = $"The keyword '{text}' can only be used inside of loops.";
+            Report(span, message);
+        }
+
+        public void ReportInvalidReturn(TextSpan span)
+        {
+            var message = "The 'return' keyword can only be used inside of functions.";
+            Report(span, message);
+        }
+
+        public void ReportInvalidReturnExpression(TextSpan span, string functionName)
+        {
+            var message = $"Since the function '{functionName}' does not return a value the 'return' keyword cannot be followed by an expression.";
+            Report(span, message);
+        }
+
+        public void ReportMissingReturnExpression(TextSpan span, TypeSymbol returnType)
+        {
+            var message = $"An expression of type '{returnType}' expected.";
             Report(span, message);
         }
     }
