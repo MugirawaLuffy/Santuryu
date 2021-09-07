@@ -93,7 +93,7 @@ namespace Santuryu.CodeAnalysis
             ";
 
             var diagnostics = @"
-                Variable 'x' is already declared.
+                'x' is already declared.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -217,6 +217,8 @@ namespace Santuryu.CodeAnalysis
 
             AssertDiagnostics(text, diagnostics);
         }
+
+
 
         [Fact]
         public void Evaluator_UnaryExpression_Reports_Undefined()
