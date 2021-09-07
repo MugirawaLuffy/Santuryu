@@ -3,6 +3,8 @@ namespace Santuryu.CodeAnalysis.Syntax
     public enum SyntaxKind
     {
         //tokens
+        BreakKeyword,
+        ContinueKeyword,
         BadToken,
         EndOfFileToken,
         WhitespaceToken,
@@ -57,12 +59,14 @@ namespace Santuryu.CodeAnalysis.Syntax
 
         //Statements
         BlockStatement,
-        ExpressionStatement,
         IfStatement,
         VariableDeclaration,
         WhileStatement,
         DoWhileStatement,
         ForStatement,
+        BreakStatement,
+        ContinueStatement,
+        ExpressionStatement,
 
         //Expressions
         LiteralExpression,

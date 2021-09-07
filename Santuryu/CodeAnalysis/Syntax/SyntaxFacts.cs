@@ -58,6 +58,10 @@ namespace Santuryu.CodeAnalysis.Syntax
         {
             switch (text)
             {
+                case "break":
+                    return SyntaxKind.BreakKeyword;
+                case "continue":
+                    return SyntaxKind.ContinueKeyword;
                 case "else":
                     return SyntaxKind.ElseKeyword;
                 case "false":
@@ -156,6 +160,10 @@ namespace Santuryu.CodeAnalysis.Syntax
                     return ",";
                 case SyntaxKind.ColonToken:
                     return ":";
+                case SyntaxKind.BreakKeyword:
+                    return "break";
+                case SyntaxKind.ContinueKeyword:
+                    return "continue";
                 case SyntaxKind.FalseKeyword:
                     return "false";
                 case SyntaxKind.ElseKeyword:

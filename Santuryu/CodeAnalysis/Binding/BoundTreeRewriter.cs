@@ -34,30 +34,11 @@ namespace Santuryu.CodeAnalysis.Binding
             }
         }
 
-        protected virtual BoundStatement RewriteLabelStatement(BoundLabelStatement node)
-        {
-            return node;
-        }
-
-        protected virtual BoundStatement RewriteGotoStatement(BoundGotoStatement node)
-        {
-            return node;
-        }
-
-        protected virtual BoundStatement RewriteConditionalGotoStatement(BoundConditionalGotoStatement node)
-        {
-            var condition = RewriteExpression(node.Condition);
-            if (condition == node.Condition)
-                return node;
-
-            return new BoundConditionalGotoStatement(node.Label, condition, node.JumpIfTrue);
-        }
-
         protected virtual BoundStatement RewriteBlockStatement(BoundBlockStatement node)
         {
             ImmutableArray<BoundStatement>.Builder builder = null;
 
-            for (var i = 0; i < node.Statements.Length; i++)
+            for (var i = 0; i< node.Statements.Length; i++)
             {
                 var oldStatement = node.Statements[i];
                 var newStatement = RewriteStatement(oldStatement);
@@ -109,7 +90,7 @@ namespace Santuryu.CodeAnalysis.Binding
             if (condition == node.Condition && body == node.Body)
                 return node;
 
-            return new BoundWhileStatement(condition, body);
+            return new BoundWhileStatement(condition, body, node.BreakLabel, node.ContinueLabel);
         }
 
         protected virtual BoundStatement RewriteDoWhileStatement(BoundDoWhileStatement node)
@@ -119,7 +100,7 @@ namespace Santuryu.CodeAnalysis.Binding
             if (body == node.Body && condition == node.Condition)
                 return node;
 
-            return new BoundDoWhileStatement(body, condition);
+            return new BoundDoWhileStatement(body, condition, node.BreakLabel, node.ContinueLabel);
         }
 
         protected virtual BoundStatement RewriteForStatement(BoundForStatement node)
@@ -130,7 +111,26 @@ namespace Santuryu.CodeAnalysis.Binding
             if (lowerBound == node.LowerBound && upperBound == node.UpperBound && body == node.Body)
                 return node;
 
-            return new BoundForStatement(node.Variable, lowerBound, upperBound, body);
+            return new BoundForStatement(node.Variable, lowerBound, upperBound, body, node.BreakLabel, node.ContinueLabel);
+        }
+
+        protected virtual BoundStatement RewriteLabelStatement(BoundLabelStatement node)
+        {
+            return node;
+        }
+
+        protected virtual BoundStatement RewriteGotoStatement(BoundGotoStatement node)
+        {
+            return node;
+        }
+
+        protected virtual BoundStatement RewriteConditionalGotoStatement(BoundConditionalGotoStatement node)
+        {
+            var condition = RewriteExpression(node.Condition);
+            if (condition == node.Condition)
+                return node;
+
+            return new BoundConditionalGotoStatement(node.Label, condition, node.JumpIfTrue);
         }
 
         protected virtual BoundStatement RewriteExpressionStatement(BoundExpressionStatement node)
@@ -214,7 +214,7 @@ namespace Santuryu.CodeAnalysis.Binding
         {
             ImmutableArray<BoundExpression>.Builder builder = null;
 
-            for (var i = 0; i < node.Arguments.Length; i++)
+            for (var i = 0; i< node.Arguments.Length; i++)
             {
                 var oldArgument = node.Arguments[i];
                 var newArgument = RewriteExpression(oldArgument);
