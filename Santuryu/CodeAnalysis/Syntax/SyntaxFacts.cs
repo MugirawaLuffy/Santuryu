@@ -152,6 +152,8 @@ namespace Santuryu.CodeAnalysis.Syntax
                     return "}";
                 case SyntaxKind.CommaToken:
                     return ",";
+                case SyntaxKind.ColonToken:
+                    return ":";
                 case SyntaxKind.FalseKeyword:
                     return "false";
                 case SyntaxKind.ElseKeyword:

@@ -14,7 +14,6 @@ namespace Santuryu.CodeAnalysis.Syntax
         SlashToken,
         OpenParenthesisToken,
         CloseParenthesisToken,
-        IdentifierToken,
         BangToken,
         TildeToken,
         HatToken,
@@ -31,7 +30,9 @@ namespace Santuryu.CodeAnalysis.Syntax
         EqualsToken,
         OpenBraceToken,
         CloseBraceToken,
+        ColonToken,
         CommaToken,
+        IdentifierToken,
 
         //Keywords
         ElseKeyword,
@@ -48,6 +49,7 @@ namespace Santuryu.CodeAnalysis.Syntax
         //Nodes
         CompilationUnit,
         ElseClause,
+        TypeClause,
 
         //Statements
         BlockStatement,
