@@ -26,7 +26,11 @@ namespace Santuryu
             }
 
             if(!args[0].EndsWith(".ryu"))
+            {
                 System.Console.WriteLine("error: Source has invalid format, try to submit <.ryu> files"); 
+                return;
+            }
+                
 
             var path = args.Single();
 

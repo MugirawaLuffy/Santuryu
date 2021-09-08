@@ -14,6 +14,19 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "sc",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "--project",
+                "${workspaceFolder}/sc/sc.csproj",
+                "--",
+                "${file}"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "publish",
             "command": "dotnet",
             "type": "process",
