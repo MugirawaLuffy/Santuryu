@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Santuryu", "Santuryu\Santur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Santuryu.Tests", "Santuryu.Tests\Santuryu.Tests.csproj", "{5E24EA44-F2EE-41D1-B6CD-9ADCCD9D4B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mc", "mc\mc.csproj", "{55520FCB-6287-47BE-99D7-1DAF98619AE5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sc", "sc\sc.csproj", "{17C7440C-E442-406D-BCA0-FAF6F0012BFF}"
 EndProject
 Global
