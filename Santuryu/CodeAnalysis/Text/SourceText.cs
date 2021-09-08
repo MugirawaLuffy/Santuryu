@@ -7,8 +7,9 @@ namespace Santuryu.CodeAnalysis.Text
     {
         private readonly string _text;
 
-        private SourceText(string text)
+        private SourceText(string text, string fileName)
         {
+            FileName = fileName;
             _text = text;
             Lines = ParseLines(this, text);
         }
@@ -44,7 +45,7 @@ namespace Santuryu.CodeAnalysis.Text
 
             return lower - 1;
         }
-
+        public string FileName { get; }
         private static ImmutableArray<TextLine> ParseLines(SourceText sourceText, string text)
         {
             var result = ImmutableArray.CreateBuilder<TextLine>();
@@ -97,9 +98,9 @@ namespace Santuryu.CodeAnalysis.Text
             return 0;
         }
 
-        public static SourceText From(string text)
+        public static SourceText From(string text, string fileName = "")
         {
-            return new SourceText(text);
+            return new SourceText(text, fileName);
         }
 
         public override string ToString() => _text;
