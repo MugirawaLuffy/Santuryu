@@ -10,29 +10,10 @@ namespace Santuryu.CodeAnalysis
     public class EvaluationTests
     {
         [Theory]
-        [InlineData("~1", -2)]
-        [InlineData("1 | 2", 3)]
-        [InlineData("1 | 0", 1)]
-        [InlineData("1 & 3", 1)]
-        [InlineData("1 & 0", 0)]
-        [InlineData("1 ^ 0", 1)]
-        [InlineData("0 ^ 1", 1)]
-        [InlineData("1 ^ 3", 2)]
-        [InlineData("false | false", false)]
-        [InlineData("false | true", true)]
-        [InlineData("true | false", true)]
-        [InlineData("true | true", true)]
-        [InlineData("false & false", false)]
-        [InlineData("false & true", false)]
-        [InlineData("true & false", false)]
-        [InlineData("true & true", true)]
-        [InlineData("false ^ false", false)]
-        [InlineData("true ^ false", true)]
-        [InlineData("false ^ true", true)]
-        [InlineData("true ^ true", false)]
         [InlineData("1", 1)]
         [InlineData("+1", 1)]
         [InlineData("-1", -1)]
+        [InlineData("~1", -2)]
         [InlineData("14 + 12", 26)]
         [InlineData("12 - 3", 9)]
         [InlineData("4 * 2", 8)]
@@ -52,12 +33,31 @@ namespace Santuryu.CodeAnalysis
         [InlineData("4 >= 4", true)]
         [InlineData("5 >= 4", true)]
         [InlineData("4 >= 5", false)]
+        [InlineData("1 | 2", 3)]
+        [InlineData("1 | 0", 1)]
+        [InlineData("1 & 3", 1)]
+        [InlineData("1 & 0", 0)]
+        [InlineData("1 ^ 0", 1)]
+        [InlineData("0 ^ 1", 1)]
+        [InlineData("1 ^ 3", 2)]
         [InlineData("false == false", true)]
         [InlineData("true == false", false)]
         [InlineData("false != false", false)]
         [InlineData("true != false", true)]
         [InlineData("true && true", true)]
-        [InlineData(" false || false", false)]
+        [InlineData("false || false", false)]
+        [InlineData("false | false", false)]
+        [InlineData("false | true", true)]
+        [InlineData("true | false", true)]
+        [InlineData("true | true", true)]
+        [InlineData("false & false", false)]
+        [InlineData("false & true", false)]
+        [InlineData("true & false", false)]
+        [InlineData("true & true", true)]
+        [InlineData("false ^ false", false)]
+        [InlineData("true ^ false", true)]
+        [InlineData("false ^ true", true)]
+        [InlineData("true ^ true", false)]
         [InlineData("true", true)]
         [InlineData("false", false)]
         [InlineData("!true", false)]
@@ -65,23 +65,23 @@ namespace Santuryu.CodeAnalysis
         [InlineData("var a = 10", 10)]
         [InlineData("\"test\"", "test")]
         [InlineData("\"te\"\"st\"", "te\"st")]
-        [InlineData("{var a = 10 (a * a)}", 100)]
-        [InlineData("{ var a = 0 (a = 10) * a }", 100)]
-        [InlineData("{ var a = 0 if a == 0 a = 10 a }", 10)]
-        [InlineData("{ var a = 0 if a == 4 a = 10 a }", 0)]
-        [InlineData("{ var a = 0 if a == 0 a = 10 else a = 5 a }", 10)]
-        [InlineData("{ var a = 0 if a == 4 a = 10 else a = 5 a }", 5)]
         [InlineData("\"test\" == \"test\"", true)]
         [InlineData("\"test\" != \"test\"", false)]
         [InlineData("\"test\" == \"abc\"", false)]
         [InlineData("\"test\" != \"abc\"", true)]
         [InlineData("\"test\" + \"abc\"", "testabc")]
+        [InlineData("{ var a = 10 (a * a) }", 100)]
+        [InlineData("{ var a = 0 (a = 10) * a }", 100)]
+        [InlineData("{ var a = 0 if a == 0 a = 10 a }", 10)]
+        [InlineData("{ var a = 0 if a == 4 a = 10 a }", 0)]
+        [InlineData("{ var a = 0 if a == 0 a = 10 else a = 5 a }", 10)]
+        [InlineData("{ var a = 0 if a == 4 a = 10 else a = 5 a }", 5)]
         [InlineData("{ var i = 10 var result = 0 while i > 0 { result = result + i i = i - 1} result }", 55)]
-        [InlineData("{ var i = 0 do { i = i + 1 if i == 5 continue } while i < 5 i }", 5)]
-        [InlineData("{ var i = 0 while i < 5 { i = i + 1 if i == 5 continue } i }", 5)]
         [InlineData("{ var result = 0 for i = 1 to 10 { result = result + i } result }", 55)]
         [InlineData("{ var a = 10 for i = 1 to (a = a - 1) { } a }", 9)]
         [InlineData("{ var a = 0 do a = a + 1 while a < 10 a}", 10)]
+        [InlineData("{ var i = 0 while i < 5 { i = i + 1 if i == 5 continue } i }", 5)]
+        [InlineData("{ var i = 0 do { i = i + 1 if i == 5 continue } while i < 5 i }", 5)]
         public void Evaluator_Computes_CorrectValues(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);
@@ -103,6 +103,103 @@ namespace Santuryu.CodeAnalysis
 
             var diagnostics = @"
                 'x' is already declared.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_BlockStatement_NoInfiniteLoop()
+        {
+            var text = @"
+                {
+                [)][]
+            ";
+
+            var diagnostics = @"
+                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>.
+                Unexpected token <EndOfFileToken>, expected <CloseBraceToken>.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_InvokeFunctionArguments_Missing()
+        {
+            var text = @"
+                print([)]
+            ";
+
+            var diagnostics = @"
+                Function 'print' requires 1 arguments but was given 0.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_InvokeFunctionArguments_Exceeding()
+        {
+            var text = @"
+                print(""Hello""[, "" "", "" world!""])
+            ";
+
+            var diagnostics = @"
+                Function 'print' requires 1 arguments but was given 3.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_InvokeFunctionArguments_NoInfiniteLoop()
+        {
+            var text = @"
+                print(""Hi""[[=]][)]
+            ";
+
+            var diagnostics = @"
+                Unexpected token <EqualsToken>, expected <CloseParenthesisToken>.
+                Unexpected token <EqualsToken>, expected <IdentifierToken>.
+                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_FunctionParameters_NoInfiniteLoop()
+        {
+            var text = @"
+                function hi(name: string[[[=]]][)]
+                {
+                    print(""Hi "" + name + ""!"" )
+                }[]
+            ";
+
+            var diagnostics = @"
+                Unexpected token <EqualsToken>, expected <CloseParenthesisToken>.
+                Unexpected token <EqualsToken>, expected <OpenBraceToken>.
+                Unexpected token <EqualsToken>, expected <IdentifierToken>.
+                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>.
+                Unexpected token <EndOfFileToken>, expected <CloseBraceToken>.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_FunctionReturn_Missing()
+        {
+            var text = @"
+                function [add](a: int, b: int): int
+                {
+                }
+            ";
+
+            var diagnostics = @"
+                Not all code paths return a value.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -162,6 +259,7 @@ namespace Santuryu.CodeAnalysis
 
             AssertDiagnostics(text, diagnostics);
         }
+
         [Fact]
         public void Evaluator_ForStatement_Reports_CannotConvert_LowerBound()
         {
@@ -211,67 +309,16 @@ namespace Santuryu.CodeAnalysis
         }
 
         [Fact]
-        public void Evaluator_InvokeFunctionArguments_Missing()
+        public void Evaluator_NameExpression_Reports_NoErrorForInsertedToken()
         {
-            var text = @"
-                print([)]
-            ";
+            var text = @"1 + []";
 
             var diagnostics = @"
-                Function 'print' requires 1 arguments but was given 0.
+                Unexpected token <EndOfFileToken>, expected <IdentifierToken>.
             ";
 
             AssertDiagnostics(text, diagnostics);
         }
-
-        [Fact]
-        public void Evaluator_InvokeFunctionArguments_Exceeding()
-        {
-            var text = @"
-                print(""Hello""[, "" "", "" world!""])
-            ";
-
-            var diagnostics = @"
-                Function 'print' requires 1 arguments but was given 3.
-            ";
-
-            AssertDiagnostics(text, diagnostics);
-        }
-
-        [Fact]
-        public void Evaluator_Variables_Can_Shadow_Functions()
-        {
-            var text = @"
-                {
-                    let print = 42
-                    [print](""test"")
-                }
-            ";
-
-            var diagnostics = @"
-                Function 'print' doesn't exist.
-            ";
-
-            AssertDiagnostics(text, diagnostics);
-        }
-
-        [Fact]
-        public void Evaluator_FunctionReturn_Missing()
-        {
-            var text = @"
-                function [add](a: int, b: int): int
-                {
-                }
-            ";
-
-            var diagnostics = @"
-                Not all code paths return a value.
-            ";
-
-            AssertDiagnostics(text, diagnostics);
-        }
-
-
 
         [Fact]
         public void Evaluator_UnaryExpression_Reports_Undefined()
@@ -310,6 +357,18 @@ namespace Santuryu.CodeAnalysis
         }
 
         [Fact]
+        public void Evaluator_AssignmentExpression_Reports_NotAVariable()
+        {
+            var text = @"[print] = 42";
+
+            var diagnostics = @"
+                'print' is not a variable.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
         public void Evaluator_AssignmentExpression_Reports_CannotAssign()
         {
             var text = @"
@@ -342,106 +401,53 @@ namespace Santuryu.CodeAnalysis
 
             AssertDiagnostics(text, diagnostics);
         }
+
         [Fact]
-        public void Evaluator_BlockStatement_NoInfiniteLoop()
+        public void Evaluator_CallExpression_Reports_Undefined()
+        {
+            var text = @"[foo](42)";
+
+            var diagnostics = @"
+                Function 'foo' doesn't exist.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_CallExpression_Reports_NotAFunction()
         {
             var text = @"
                 {
-                [)][]
+                    let foo = 42
+                    [foo](42)
+                }
             ";
 
             var diagnostics = @"
-                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>.
-                Unexpected token <EndOfFileToken>, expected <CloseBraceToken>.
-            ";
-
-            AssertDiagnostics(text, diagnostics);
-        }
-        [Fact]
-        public void Evaluator_NameExpression_Reports_NoErrorForInsertedToken()
-        {
-            var text = @"1 + []";
-
-            var diagnostics = @"
-                Unexpected token <EndOfFileToken>, expected <IdentifierToken>.
+                'foo' is not a function.
             ";
 
             AssertDiagnostics(text, diagnostics);
         }
 
-        private static void AssertValue(string text, object expectedValue)
-        {
-            var syntaxTree = SyntaxTree.Parse(text);
-            var compilation = new Compilation(syntaxTree);
-            var variables = new Dictionary<VariableSymbol, object>();
-            var result = compilation.Evaluate(variables);
-
-            Assert.Empty(result.Diagnostics);
-            Assert.Equal(expectedValue, result.Value);
-        }
-
         [Fact]
-        public void Evaluator_InvokeFunctionArguments_NoInfiniteLoop()
+        public void Evaluator_Variables_Can_Shadow_Functions()
         {
             var text = @"
-                print(""Hi""[[=]][)]
-            ";
-
-            var diagnostics = @"
-                Unexpected token <EqualsToken>, expected <CloseParenthesisToken>.
-                Unexpected token <EqualsToken>, expected <IdentifierToken>.
-                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>.
-            ";
-
-            AssertDiagnostics(text, diagnostics);
-        }
-
-        [Fact]
-        public void Evaluator_FunctionParameters_NoInfiniteLoop()
-        {
-            var text = @"
-                function hi(name: string[[[=]]][)]
                 {
-                    print(""Hi "" + name + ""!"" )
-                }[]
+                    let print = 42
+                    [print](""test"")
+                }
             ";
 
             var diagnostics = @"
-                Unexpected token <EqualsToken>, expected <CloseParenthesisToken>.
-                Unexpected token <EqualsToken>, expected <OpenBraceToken>.
-                Unexpected token <EqualsToken>, expected <IdentifierToken>.
-                Unexpected token <CloseParenthesisToken>, expected <IdentifierToken>.
-                Unexpected token <EndOfFileToken>, expected <CloseBraceToken>.
+                'print' is not a function.
             ";
 
             AssertDiagnostics(text, diagnostics);
         }
 
-        private void AssertDiagnostics(string text, string diagnosticText)
-        {
-            var annotatedText = AnnotatedText.Parse(text);
-            var syntaxTree = SyntaxTree.Parse(annotatedText.Text);
-            var compilation = new Compilation(syntaxTree);
-            var result = compilation.Evaluate(new Dictionary<VariableSymbol, object>());
-
-            var expectedDiagnostics = AnnotatedText.UnindentLines(diagnosticText);
-
-            if (annotatedText.Spans.Length != expectedDiagnostics.Length)
-                throw new Exception("ERROR: Must mark as many spans as there are expected diagnostics");
-
-            Assert.Equal(expectedDiagnostics.Length, result.Diagnostics.Length);
-
-            for (var i = 0; i < expectedDiagnostics.Length; i++)
-            {
-                var expectedMessage = expectedDiagnostics[i];
-                var actualMessage = result.Diagnostics[i].Message;
-                Assert.Equal(expectedMessage, actualMessage);
-
-                var expectedSpan = annotatedText.Spans[i];
-                var actualSpan = result.Diagnostics[i].Span;
-                Assert.Equal(expectedSpan, actualSpan);
-            }
-        }
         [Fact]
         public void Evaluator_Void_Function_Should_Not_Return_Value()
         {
@@ -470,7 +476,7 @@ namespace Santuryu.CodeAnalysis
             ";
 
             var diagnostics = @"
-                An expression of type 'int' expected.
+                An expression of type 'int' is expected.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -607,44 +613,41 @@ namespace Santuryu.CodeAnalysis
             AssertDiagnostics(text, diagnostics);
         }
 
-        [Fact]
-        public void Evaluator_AssignmentExpression_Reports_NotAVariable()
+        private static void AssertValue(string text, object expectedValue)
         {
-            var text = @"[print] = 42";
+            var syntaxTree = SyntaxTree.Parse(text);
+            var compilation = new Compilation(syntaxTree);
+            var variables = new Dictionary<VariableSymbol, object>();
+            var result = compilation.Evaluate(variables);
 
-            var diagnostics = @"
-                'print' is not a variable.
-            ";
-
-            AssertDiagnostics(text, diagnostics);
-        }
-        [Fact]
-        public void Evaluator_CallExpression_Reports_Undefined()
-        {
-            var text = @"[foo](42)";
-
-            var diagnostics = @"
-                Function 'foo' doesn't exist.
-            ";
-
-            AssertDiagnostics(text, diagnostics);
+            Assert.Empty(result.Diagnostics);
+            Assert.Equal(expectedValue, result.Value);
         }
 
-        [Fact]
-        public void Evaluator_CallExpression_Reports_NotAFunction()
+        private void AssertDiagnostics(string text, string diagnosticText)
         {
-            var text = @"
-                {
-                    let foo = 42
-                    [foo](42)
-                }
-            ";
+            var annotatedText = AnnotatedText.Parse(text);
+            var syntaxTree = SyntaxTree.Parse(annotatedText.Text);
+            var compilation = new Compilation(syntaxTree);
+            var result = compilation.Evaluate(new Dictionary<VariableSymbol, object>());
 
-            var diagnostics = @"
-                'foo' is not a function.
-            ";
+            var expectedDiagnostics = AnnotatedText.UnindentLines(diagnosticText);
 
-            AssertDiagnostics(text, diagnostics);
+            if (annotatedText.Spans.Length != expectedDiagnostics.Length)
+                throw new Exception("ERROR: Must mark as many spans as there are expected diagnostics");
+
+            Assert.Equal(expectedDiagnostics.Length, result.Diagnostics.Length);
+
+            for (var i = 0; i < expectedDiagnostics.Length; i++)
+            {
+                var expectedMessage = expectedDiagnostics[i];
+                var actualMessage = result.Diagnostics[i].Message;
+                Assert.Equal(expectedMessage, actualMessage);
+
+                var expectedSpan = annotatedText.Spans[i];
+                var actualSpan = result.Diagnostics[i].Span;
+                Assert.Equal(expectedSpan, actualSpan);
+            }
         }
     }
 }

@@ -22,3 +22,15 @@ D:\nils\Santuryu\Santuryu\obj\Debug\net5.0\Santuryu.csproj.CoreCompileInputs.cac
 D:\nils\Santuryu\Santuryu\obj\Debug\net5.0\Santuryu.dll
 D:\nils\Santuryu\Santuryu\obj\Debug\net5.0\ref\Santuryu.dll
 D:\nils\Santuryu\Santuryu\obj\Debug\net5.0\Santuryu.pdb
+D:\nils\Santuryu\src\Santuryu\bin\Debug\net5.0\Santuryu.deps.json
+D:\nils\Santuryu\src\Santuryu\bin\Debug\net5.0\Santuryu.dll
+D:\nils\Santuryu\src\Santuryu\bin\Debug\net5.0\ref\Santuryu.dll
+D:\nils\Santuryu\src\Santuryu\bin\Debug\net5.0\Santuryu.pdb
+D:\nils\Santuryu\src\Santuryu\obj\Debug\net5.0\Santuryu.csprojAssemblyReference.cache
+D:\nils\Santuryu\src\Santuryu\obj\Debug\net5.0\Santuryu.GeneratedMSBuildEditorConfig.editorconfig
+D:\nils\Santuryu\src\Santuryu\obj\Debug\net5.0\Santuryu.AssemblyInfoInputs.cache
+D:\nils\Santuryu\src\Santuryu\obj\Debug\net5.0\Santuryu.AssemblyInfo.cs
+D:\nils\Santuryu\src\Santuryu\obj\Debug\net5.0\Santuryu.csproj.CoreCompileInputs.cache
+D:\nils\Santuryu\src\Santuryu\obj\Debug\net5.0\Santuryu.dll
+D:\nils\Santuryu\src\Santuryu\obj\Debug\net5.0\ref\Santuryu.dll
+D:\nils\Santuryu\src\Santuryu\obj\Debug\net5.0\Santuryu.pdb

@@ -308,7 +308,8 @@ namespace Santuryu.CodeAnalysis.Binding
 
         public static bool AllPathsReturn(BoundBlockStatement body)
         {
-            var graph = Create(body);
+            try{
+                var graph = Create(body);
 
             foreach (var branch in graph.End.Incoming)
             {
@@ -318,6 +319,11 @@ namespace Santuryu.CodeAnalysis.Binding
             }
 
             return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+            
         }
     }
 }
