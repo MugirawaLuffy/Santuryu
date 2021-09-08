@@ -1,0 +1,5 @@
+
+print("Project 'helloworld.ryu up and running, input your name, dummy'")
+
+let name = getName()
+print("Hello " + name)
